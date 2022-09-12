@@ -1,0 +1,20 @@
+{
+  "links": [
+    {
+      "link": "/search",
+      "label": "Search"
+    },
+    {
+      "link": "/anime",
+      "label": "My Anime"
+    },
+    {
+      "link": "/manga",
+      "label": "My Manga"
+    },
+    {
+      "link": "/calendar",
+      "label": "Calendar"
+    }
+  ]
+}
