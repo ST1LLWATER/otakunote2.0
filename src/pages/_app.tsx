@@ -23,7 +23,9 @@ const MyApp: AppType = ({
         withNormalizeCSS
       >
         <HeaderResponsive links={Links.links} />
-        <Component {...pageProps} />
+        <div>
+          <Component {...pageProps} />
+        </div>
       </ThemeProvider>
     </SessionProvider>
   );

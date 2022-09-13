@@ -19,6 +19,7 @@
     "@trpc/next": "^9.27.2",
     "@trpc/react": "^9.27.2",
     "@trpc/server": "^9.27.2",
+    "graphql-request": "^5.0.0",
     "jotai": "^1.8.3",
     "next": "12.2.5",
     "next-auth": "^4.10.3",

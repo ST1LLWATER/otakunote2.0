@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import {
   createStyles,
   Header,
@@ -13,6 +14,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { MdOutlineMovieFilter } from 'react-icons/md';
 import { BsChevronDown } from 'react-icons/bs';
+import Link from 'next/link';
 
 const HEADER_HEIGHT = 60;
 
@@ -119,24 +121,28 @@ interface HeaderResponsiveProps {
 
 export function HeaderResponsive({ links }: HeaderResponsiveProps) {
   const [opened, { toggle, close }] = useDisclosure(false);
-  const [active, setActive] = useState(links[0]?.link);
+  const [active, setActive] = useState<null | string>(null);
   const { classes, cx } = useStyles();
+  const Router = useRouter();
+
+  useEffect(() => {
+    setActive(Router.pathname);
+  });
 
   const items = links.map((link) => (
-    <a
-      key={link.label}
-      href={link.link}
-      className={cx(classes.link, {
-        [classes.linkActive]: active === link.link,
-      })}
-      onClick={(event) => {
-        event.preventDefault();
-        setActive(link.link);
-        close();
-      }}
-    >
-      {link.label}
-    </a>
+    <Link key={link.label} href={link.link}>
+      <a
+        className={cx(classes.link, {
+          [classes.linkActive]: active === link.link,
+        })}
+        onClick={(event) => {
+          setActive(link.link);
+          close();
+        }}
+      >
+        {link.label}
+      </a>
+    </Link>
   ));
 
   return (
@@ -150,7 +156,6 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
           <Menu trigger="hover" exitTransitionDuration={0}>
             <Menu.Target>
               <a
-                href="/"
                 className={classes.link}
                 onClick={(event) => event.preventDefault()}
               >
