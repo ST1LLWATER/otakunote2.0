@@ -34,7 +34,11 @@ const Search = () => {
     search_query: string,
     sort: string
   ) {
-    let variables;
+    let variables: {
+      type?: string;
+      search_query: string;
+      sort: string;
+    };
     if (type === 'All') {
       variables = {
         search_query,
@@ -42,11 +46,12 @@ const Search = () => {
       };
     } else {
       variables = {
-        type,
         search_query,
         sort,
+        type,
       };
     }
+
     try {
       const data = await client.request(query, variables, requestHeaders);
       setSearchResults(data.Page.media);

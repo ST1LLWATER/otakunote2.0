@@ -27,17 +27,16 @@ interface AnimeCard {
 }
 
 const Card = ({ anime, watchlisted }: AnimeCard) => {
-  const slider = useRef(null);
+  const slider = useRef<HTMLDivElement>(null);
 
   let mouseDown = false;
   let startX: number, scrollLeft: number;
 
   const startDragging = function (e: MouseEvent<HTMLDivElement>) {
     mouseDown = true;
-    if (slider.current) {
-      startX = e.pageX - slider.current.offsetLeft;
-      scrollLeft = slider.current.scrollLeft;
-    }
+    console.log(slider.current);
+    startX = e.pageX - slider.current!.offsetLeft;
+    scrollLeft = slider.current!.scrollLeft;
   };
   const stopDragging = () => {
     mouseDown = false;
@@ -49,9 +48,9 @@ const Card = ({ anime, watchlisted }: AnimeCard) => {
     if (!mouseDown) {
       return;
     }
-    const x = e.pageX - slider.current.offsetLeft;
+    const x = e.pageX - slider.current!.offsetLeft;
     const scroll = x - startX;
-    slider.current.scrollLeft = scrollLeft - scroll;
+    slider.current!.scrollLeft = scrollLeft - scroll;
   }
 
   return (
