@@ -1,6 +1,7 @@
 export interface CardInterface {
   id: number;
   type: CardType;
+  isAdult: boolean;
   title: {
     english: string;
     romaji: string;

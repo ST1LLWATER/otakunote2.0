@@ -126,7 +126,7 @@ export function InputWithFilter({ props, handleSubmit }: InputProps) {
           );
 
           setFormInputs({
-            type: 'ANIME',
+            type: 'All',
             search_query: '',
             sort: 'POPULARITY_DESC',
           });

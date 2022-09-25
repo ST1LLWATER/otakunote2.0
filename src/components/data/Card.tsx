@@ -4,6 +4,7 @@ import { RiStarSFill } from 'react-icons/ri';
 import { Badge, Button } from '@mantine/core';
 import { CardInterface } from '../../interfaces/CardInterface';
 import { BsPlus } from 'react-icons/bs';
+import { WATCHLIST_BUTTON, REMOVE_BUTTON } from './ActionButtons';
 
 // const [description, setDescription] = useState(props.description);
 const months = [
@@ -61,6 +62,11 @@ const Card = ({ anime, watchlisted }: AnimeCard) => {
       className={styles.card_parent}
     >
       <div className={styles.overlay}></div>
+      {anime.isAdult && (
+        <Badge className={styles.nsfw_badge} size="sm">
+          NSFW
+        </Badge>
+      )}
       <Badge className={styles.badge} size="sm">
         {anime.type === 'ANIME' ? 'Anime' : 'Manga'}
       </Badge>
@@ -104,25 +110,7 @@ const Card = ({ anime, watchlisted }: AnimeCard) => {
           )}
         </div>
         <div className={styles.actions}>
-          <Button
-            className={styles.action_button}
-            styles={(theme) => ({
-              root: {
-                padding: '4px 8px',
-                width: '50%',
-              },
-              rightIcon: {
-                margin: '0',
-                fontSize: '20px',
-              },
-            })}
-            variant="filled"
-            size="sm"
-            color="violet"
-            rightIcon={<BsPlus />}
-          >
-            <p>Watchlist</p>
-          </Button>
+          {watchlisted ? <WATCHLIST_BUTTON /> : <REMOVE_BUTTON />}
 
           <Button
             styles={(theme) => ({

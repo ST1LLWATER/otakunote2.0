@@ -4,10 +4,10 @@ import { GraphQLClient } from 'graphql-request';
 import ENDPOINT from '../constants/api';
 import { SEARCH_QUERY } from '../queries/gql_queries.gql';
 import { InputWithFilter } from '../components/search/Input';
-import Card from '../components/global/Card';
 import CardWrapper from '../components/global/CardWrapper';
 import { atom, useAtom } from 'jotai';
 import { CardInterface } from '../interfaces/CardInterface';
+import { APIInterface } from '../interfaces/APIInterface';
 
 export const searchedAnimeAtom = atom<CardInterface[] | null>(null);
 
@@ -53,7 +53,12 @@ const Search = () => {
     }
 
     try {
-      const data = await client.request(query, variables, requestHeaders);
+      const data = await client.request<APIInterface>(
+        query,
+        variables,
+        requestHeaders
+      );
+      console.log(data);
       setSearchResults(data.Page.media);
     } catch (err) {
       console.log(err);

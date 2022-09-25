@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from './Card';
+import Card from '../data/Card';
 import { useAtomValue } from 'jotai';
 import { searchedAnimeAtom } from '../../pages/search';
 import { createStyles } from '@mantine/core';
@@ -34,7 +34,7 @@ const CardWrapper = () => {
   return (
     <div className={classes.wrapper}>
       {searchedAnimes?.map((anime) => (
-        <Card key={anime.id} anime={anime} watchlisted />
+        <Card key={anime.id} anime={anime} watchlisted={false} />
       ))}
     </div>
   );

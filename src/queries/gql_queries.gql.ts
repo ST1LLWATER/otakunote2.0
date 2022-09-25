@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 
-export const SEARCH_QUERY = gql`
-query ($page: Int = 1,,$type: MediaType,$search_query: String,$season: MediaSeason, $isAdult: Boolean = false,$genres:[String], $seasonYear: Int ,$sort: [MediaSort] = [POPULARITY_DESC]) {
+export const SEARCH_QUERY= gql`
+query ($page: Int = 1,,$type: MediaType,$search_query: String,$season: MediaSeason, $isAdult: Boolean,$genres:[String], $seasonYear: Int ,$sort: [MediaSort] = [POPULARITY_DESC]) {
         Page(page: $page, perPage: 50) {
           pageInfo {
             total
@@ -13,6 +13,7 @@ query ($page: Int = 1,,$type: MediaType,$search_query: String,$season: MediaSeas
           media(type:$type , search:$search_query, season:$season, seasonYear:$seasonYear, genre_in:$genres, isAdult:$isAdult, sort:$sort) {
             id
             type
+            isAdult
             title {
               english
               romaji
