@@ -18,13 +18,34 @@ const MyApp: AppType = ({
   return (
     <SessionProvider session={session}>
       <ThemeProvider
-        theme={{ fontFamily: 'Open Sans' }}
+        theme={{ fontFamily: 'Open Sans', colorScheme: 'dark' }}
         withGlobalStyles
         withNormalizeCSS
       >
-        <HeaderResponsive links={Links.links} />
-        <div>
-          <Component {...pageProps} />
+        <div
+          style={{
+            maxWidth: '1536px',
+            display: 'flex',
+            flexDirection: 'column',
+            margin: '0 auto',
+            alignItems: 'center',
+          }}
+        >
+          <div
+            style={{
+              width: '100%',
+            }}
+          >
+            <HeaderResponsive links={Links.links} />
+          </div>
+          <div
+            style={{
+              width: '100%',
+              margin: '0 auto 35px auto',
+            }}
+          >
+            <Component {...pageProps} />
+          </div>
         </div>
       </ThemeProvider>
     </SessionProvider>
