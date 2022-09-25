@@ -6,7 +6,7 @@ import { CardInterface } from '../../interfaces/CardInterface';
 import { BsPlus } from 'react-icons/bs';
 
 // const [description, setDescription] = useState(props.description);
-let months = [
+const months = [
   'Jan',
   'Feb',
   'March',
@@ -32,7 +32,7 @@ const Card = ({ anime, watchlisted }: AnimeCard) => {
   let mouseDown = false;
   let startX: number, scrollLeft: number;
 
-  let startDragging = function (e: MouseEvent<HTMLDivElement>) {
+  const startDragging = function (e: MouseEvent<HTMLDivElement>) {
     mouseDown = true;
     if (slider.current) {
       startX = e.pageX - slider.current.offsetLeft;

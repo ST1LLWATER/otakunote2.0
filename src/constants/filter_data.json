@@ -1,0 +1,46 @@
+{
+  "GenreCollection": [
+    { "value": "Action", "label": "Action" },
+    { "value": "Adventure", "label": "Adventure" },
+    { "value": "Comedy", "label": "Comedy" },
+    { "value": "Drama", "label": "Drama" },
+    { "value": "Ecchi", "label": "Ecchi" },
+    { "value": "Fantasy", "label": "Fantasy" },
+    { "value": "Hentai", "label": "Hentai" },
+    { "value": "Horror", "label": "Horror" },
+    { "value": "Mahou Shoujo", "label": "Mahou Shoujo" },
+    { "value": "Mecha", "label": "Mecha" },
+    { "value": "Music", "label": "Music" },
+    { "value": "Mystery", "label": "Mystery" },
+    { "value": "Psychological", "label": "Psychological" },
+    { "value": "Romance", "label": "Romance" },
+    { "value": "Sci-Fi", "label": "Sci-Fi" },
+    { "value": "Slice of Life", "label": "Slice of Life" },
+    { "value": "Sports", "label": "Sports" },
+    { "value": "Supernatural", "label": "Supernatural" },
+    { "value": "Thriller", "label": "Thriller" }
+  ],
+  "Season": [
+    {
+      "value": "Winter",
+      "label": "Winter"
+    },
+    {
+      "value": "Spring",
+      "label": "Spring"
+    },
+    {
+      "value": "Summer",
+      "label": "Summer"
+    },
+    {
+      "value": "Fall",
+      "label": "Fall"
+    }
+  ],
+  "Sort": [
+    { "value": "TITLE_ROMAJI", "label": "Title" },
+    { "value": "POPULARITY_DESC", "label": "Popularity" },
+    { "value": "TRENDING_DESC", "label": "Trending" }
+  ]
+}

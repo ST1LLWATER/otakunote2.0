@@ -152,6 +152,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
         <Group spacing={5} className={classes.links}>
           {items}
         </Group>
+
         <div className={classes.user}>
           <Menu trigger="hover" exitTransitionDuration={0}>
             <Menu.Target>
