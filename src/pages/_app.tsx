@@ -10,6 +10,7 @@ import type { AppRouter } from '../server/router';
 import '../styles/globals.css';
 import { HeaderResponsive } from '../components/global/Header';
 import Links from '../constants/links.json';
+import Footer from '../components/global/Footer';
 
 const MyApp: AppType = ({
   Component,
@@ -28,6 +29,7 @@ const MyApp: AppType = ({
             display: 'flex',
             flexDirection: 'column',
             margin: '0 auto',
+            minHeight: '100vh',
             alignItems: 'center',
           }}
         >
@@ -41,11 +43,13 @@ const MyApp: AppType = ({
           <div
             style={{
               width: '100%',
+              flex: 1,
               margin: '0 auto 35px auto',
             }}
           >
             <Component {...pageProps} />
           </div>
+          <Footer />
         </div>
       </ThemeProvider>
     </SessionProvider>
