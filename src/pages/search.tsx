@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { request } from 'graphql-request';
+import React, { useCallback, useEffect } from 'react';
 import { GraphQLClient } from 'graphql-request';
 import ENDPOINT from '../constants/api';
 import { SEARCH_QUERY } from '../queries/gql_queries.gql';
@@ -8,10 +7,21 @@ import CardWrapper from '../components/global/CardWrapper';
 import { atom, useAtom } from 'jotai';
 import { CardInterface } from '../interfaces/CardInterface';
 import { APIInterface } from '../interfaces/APIInterface';
+import Router from 'next/router';
+import { NextPage } from 'next';
 
 export const searchedAnimeAtom = atom<CardInterface[] | null>(null);
+interface Props {
+  query:
+    | {
+        type: string;
+        search_query: string;
+        sort: string;
+      }
+    | Record<string, never>;
+}
 
-const Search = () => {
+const Search: NextPage<Props> = ({ query }) => {
   const [searchResults, setSearchResults] = useAtom(searchedAnimeAtom);
 
   const client = new GraphQLClient(ENDPOINT, {
@@ -22,23 +32,35 @@ const Search = () => {
     },
   });
 
-  const query = SEARCH_QUERY;
+  useEffect(() => {
+    if (Object.keys(query).length === 0) return;
+    handleSearch(query.type, query.search_query, query.sort);
+  }, []);
+
+  const api_query = SEARCH_QUERY;
 
   const requestHeaders = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
   };
 
-  async function handleSubmit(
+  const handleSearch = async (
     type: string,
     search_query: string,
     sort: string
-  ) {
+  ) => {
+    const searchParams = {
+      type: type,
+      search_query: search_query,
+      sort: sort,
+    };
+
     let variables: {
       type?: string;
       search_query: string;
       sort: string;
     };
+
     if (type === 'All') {
       variables = {
         search_query,
@@ -52,25 +74,35 @@ const Search = () => {
       };
     }
 
+    Router.push({
+      pathname: '/search',
+      query: searchParams,
+    });
+
     try {
       const data = await client.request<APIInterface>(
-        query,
+        api_query,
         variables,
         requestHeaders
       );
-      console.log(data);
       setSearchResults(data.Page.media);
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   return (
     <>
-      <InputWithFilter handleSubmit={handleSubmit} />
+      <InputWithFilter handleSearch={handleSearch} />
       <CardWrapper />
     </>
   );
 };
+
+export async function getServerSideProps({ query }: Props) {
+  return {
+    props: { query },
+  };
+}
 
 export default Search;

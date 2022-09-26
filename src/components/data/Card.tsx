@@ -3,7 +3,6 @@ import styles from '../../styles/card.module.css';
 import { RiStarSFill } from 'react-icons/ri';
 import { Badge, Button } from '@mantine/core';
 import { CardInterface } from '../../interfaces/CardInterface';
-import { BsPlus } from 'react-icons/bs';
 import { WATCHLIST_BUTTON, REMOVE_BUTTON } from './ActionButtons';
 
 // const [description, setDescription] = useState(props.description);

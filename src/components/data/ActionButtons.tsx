@@ -1,5 +1,5 @@
 import { Button } from '@mantine/core';
-import { BsPlus, BsTrash } from 'react-icons/bs';
+import { BsPlus } from 'react-icons/bs';
 import { FaRegTrashAlt } from 'react-icons/fa';
 
 export const WATCHLIST_BUTTON = () => (

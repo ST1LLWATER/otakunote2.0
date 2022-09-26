@@ -44,7 +44,7 @@ const useStyles = createStyles((theme) => ({
 
 interface InputProps extends TextInputProps {
   props?: TextInputProps;
-  handleSubmit: (type: string, search_query: string, sort: string) => void;
+  handleSearch: (type: string, search_query: string, sort: string) => void;
 }
 
 type PreviousFormInput = {
@@ -53,7 +53,7 @@ type PreviousFormInput = {
   sort: string;
 };
 
-export function InputWithFilter({ props, handleSubmit }: InputProps) {
+export function InputWithFilter({ props, handleSearch }: InputProps) {
   const { classes, cx } = useStyles();
   const [formInputs, setFormInputs] = useState<{
     type: string;
@@ -64,9 +64,6 @@ export function InputWithFilter({ props, handleSubmit }: InputProps) {
     search_query: '',
     sort: 'POPULARITY_DESC',
   });
-  const [search_query, setSearchQuery] = useState('');
-  // const [type, setType] = useState<string | null>('ANIME');
-  // const [sort, setSort] = useState<string | null>('POPULARITY_DESC');
 
   return (
     <div className={classes.inputWrapper}>
@@ -119,7 +116,7 @@ export function InputWithFilter({ props, handleSubmit }: InputProps) {
       />
       <ActionIcon
         onClick={() => {
-          handleSubmit(
+          handleSearch(
             formInputs.type,
             formInputs.search_query,
             formInputs.sort
