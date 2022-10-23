@@ -1,8 +1,8 @@
-import { CardInterface } from './CardInterface';
+import { AnimeInterface } from './AnimeInterface';
 
 export interface APIInterface {
   Page: {
-    media: CardInterface[];
+    media: AnimeInterface[];
     pageInfo: {
       currentPage: number;
       hasNextPage: boolean;

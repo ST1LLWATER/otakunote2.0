@@ -1,4 +1,4 @@
-export interface CardInterface {
+export interface AnimeInterface {
   id: number;
   type: CardType;
   isAdult: boolean;

@@ -29,7 +29,8 @@ const useStyles = createStyles((theme) => ({
   inputWrapper: {
     maxWidth: '70%',
     display: 'flex',
-    zIndex: 999,
+    position: 'relative',
+    zIndex: 2,
     isolation: 'isolate',
     justifyContent: 'space-between',
     alignItems: 'center',

@@ -1,12 +1,14 @@
 import React from 'react';
 import Card from '../data/Card';
 import { useAtomValue } from 'jotai';
-import { searchedAnimeAtom } from '../../pages/search';
+import { renderAnimesAtom } from '../../pages/search';
 import { createStyles } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
     display: 'grid',
+    position: 'relative',
+    zIndex: 1,
     // gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
     gridTemplateColumns: `repeat(5,1fr)`,
     placeItems: 'center',
@@ -29,14 +31,18 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const CardWrapper = () => {
-  const searchedAnimes = useAtomValue(searchedAnimeAtom);
+  const animes = useAtomValue(renderAnimesAtom);
   const { classes, cx } = useStyles();
   return (
-    <div className={classes.wrapper}>
-      {searchedAnimes?.map((anime) => (
-        <Card key={anime.id} anime={anime} watchlisted={false} />
-      ))}
-    </div>
+    <>
+      <div className={classes.wrapper}>
+        {animes?.map((anime, index) => (
+          <>
+            <Card key={anime.id} anime={anime} watchlisted={false} />
+          </>
+        ))}
+      </div>
+    </>
   );
 };
 

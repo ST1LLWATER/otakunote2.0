@@ -42,5 +42,19 @@
     { "value": "TITLE_ROMAJI", "label": "Title" },
     { "value": "POPULARITY_DESC", "label": "Popularity" },
     { "value": "TRENDING_DESC", "label": "Trending" }
+  ],
+  "Months": [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec"
   ]
 }

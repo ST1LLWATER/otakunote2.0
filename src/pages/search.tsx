@@ -5,12 +5,12 @@ import { SEARCH_QUERY } from '../queries/gql_queries.gql';
 import { InputWithFilter } from '../components/search/Input';
 import CardWrapper from '../components/global/CardWrapper';
 import { atom, useAtom } from 'jotai';
-import { CardInterface } from '../interfaces/CardInterface';
+import { AnimeInterface } from '../interfaces/AnimeInterface';
 import { APIInterface } from '../interfaces/APIInterface';
 import Router from 'next/router';
 import { NextPage } from 'next';
 
-export const searchedAnimeAtom = atom<CardInterface[] | null>(null);
+export const renderAnimesAtom = atom<AnimeInterface[] | null>(null);
 interface Props {
   query:
     | {
@@ -22,7 +22,7 @@ interface Props {
 }
 
 const Search: NextPage<Props> = ({ query }) => {
-  const [searchResults, setSearchResults] = useAtom(searchedAnimeAtom);
+  const [searchResults, setSearchResults] = useAtom(renderAnimesAtom);
 
   const client = new GraphQLClient(ENDPOINT, {
     method: 'POST',

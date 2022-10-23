@@ -11,11 +11,16 @@ import '../styles/globals.css';
 import { HeaderResponsive } from '../components/global/Header';
 import Links from '../constants/links.json';
 import Footer from '../components/global/Footer';
+import InfoModal from '../components/data/Modal';
+import { useAtom } from 'jotai';
+import { selectedAnimeAtom } from '../store/animeStore';
 
 const MyApp: AppType = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  const [selectedAnime, setSelectedAnime] = useAtom(selectedAnimeAtom);
+
   return (
     <SessionProvider session={session}>
       <ThemeProvider
@@ -23,6 +28,12 @@ const MyApp: AppType = ({
         withGlobalStyles
         withNormalizeCSS
       >
+        {selectedAnime && (
+          <InfoModal
+            anime={selectedAnime.anime}
+            watchlisted={selectedAnime?.watchlisted}
+          />
+        )}
         <div
           style={{
             maxWidth: '1536px',
