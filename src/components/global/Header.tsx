@@ -148,7 +148,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
   return (
     <Header height={HEADER_HEIGHT} className={classes.root}>
       <div className={classes.header}>
-        <MdOutlineMovieFilter size={30} color="#000" />
+        <MdOutlineMovieFilter size={30} color="#6942BB" />
         <Group spacing={5} className={classes.links}>
           {items}
         </Group>

@@ -13,6 +13,10 @@ export const WATCHLIST_BUTTON = () => (
         margin: '0',
         fontSize: '20px',
       },
+
+      '&:focus': {
+        outline: 0,
+      },
     })}
     variant="filled"
     size="sm"
@@ -33,6 +37,10 @@ export const REMOVE_BUTTON = () => (
 
         '&:hover': {
           background: '#864335',
+        },
+
+        '&:focus': {
+          outline: 0,
         },
       },
       rightIcon: {

@@ -41,7 +41,8 @@
   "Sort": [
     { "value": "TITLE_ROMAJI", "label": "Title" },
     { "value": "POPULARITY_DESC", "label": "Popularity" },
-    { "value": "TRENDING_DESC", "label": "Trending" }
+    { "value": "TRENDING_DESC", "label": "Trending" },
+    { "value": "START_DATE", "label": "Date" }
   ],
   "Months": [
     "Jan",

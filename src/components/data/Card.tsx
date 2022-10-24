@@ -114,6 +114,10 @@ const Card = ({ anime, watchlisted }: AnimeCard) => {
                   '&:hover': {
                     backgroundColor: 'inherit',
                   },
+
+                  '&:focus': {
+                    outline: 0,
+                  },
                 },
               })}
               className={styles.action_button}
