@@ -12,6 +12,7 @@ import {
   Center,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { signIn, useSession, signOut } from 'next-auth/react';
 import { MdOutlineMovieFilter } from 'react-icons/md';
 import { BsChevronDown } from 'react-icons/bs';
 import Link from 'next/link';
@@ -77,6 +78,7 @@ const useStyles = createStyles((theme) => ({
     lineHeight: 1,
     padding: '8px 12px',
     margin: '0 8px',
+    cursor: 'pointer',
     borderRadius: theme.radius.sm,
     textDecoration: 'none',
     color:
@@ -125,6 +127,8 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
   const { classes, cx } = useStyles();
   const Router = useRouter();
 
+  const { data: session } = useSession();
+
   useEffect(() => {
     setActive(Router.pathname);
   });
@@ -154,22 +158,31 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
         </Group>
 
         <div className={classes.user}>
-          <Menu trigger="hover" exitTransitionDuration={0}>
-            <Menu.Target>
-              <a
-                className={classes.link}
-                onClick={(event) => event.preventDefault()}
-              >
-                <Center>
-                  <span className={classes.linkLabel}>STILLWATER</span>
-                  <BsChevronDown size={12} />
-                </Center>
+          {session && session.user ? (
+            <>
+              <Menu trigger="hover" exitTransitionDuration={0}>
+                <Menu.Target>
+                  <Center className={classes.link}>
+                    <span className={classes.linkLabel}>
+                      {session.user.name}
+                    </span>
+                    <BsChevronDown size={12} />
+                  </Center>
+                </Menu.Target>
+                <Menu.Dropdown>
+                  <a onClick={(event) => signOut()}>
+                    <Menu.Item>Sign Out</Menu.Item>
+                  </a>
+                </Menu.Dropdown>
+              </Menu>
+            </>
+          ) : (
+            <>
+              <a className={classes.link} onClick={(event) => signIn('google')}>
+                <Center>Sign In</Center>
               </a>
-            </Menu.Target>
-            <Menu.Dropdown>
-              <Menu.Item>Sign Out</Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
+            </>
+          )}
         </div>
 
         <Burger
