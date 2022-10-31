@@ -70,6 +70,13 @@ export function InputWithFilter({ props, handleSearch }: InputProps) {
     <div className={classes.inputWrapper}>
       <TextInput
         className={classes.input}
+        styles={{
+          input: {
+            '&:focus': {
+              borderColor: '#6942BB',
+            },
+          },
+        }}
         icon={<AiOutlineSearch size={18} />}
         size="sm"
         value={formInputs.search_query}
@@ -85,10 +92,26 @@ export function InputWithFilter({ props, handleSearch }: InputProps) {
       <Select
         // label="Type"
         placeholder="Select Type"
+        transition="pop-top-left"
+        transitionDuration={80}
+        transitionTimingFunction="ease"
         size="sm"
         styles={(theme) => ({
-          dropdown: {
-            zIndex: 999,
+          // dropdown: {
+          //   zIndex: 999,
+          // },
+          input: {
+            '&:focus': {
+              borderColor: '#6942BB',
+            },
+          },
+
+          item: {
+            '&[data-selected]': {
+              '&, &:hover': {
+                backgroundColor: '#6942BB',
+              },
+            },
           },
         })}
         value={formInputs.type}
@@ -107,6 +130,27 @@ export function InputWithFilter({ props, handleSearch }: InputProps) {
         // label="Sort"
         size="sm"
         placeholder="Sort By"
+        transition="pop-top-left"
+        transitionDuration={80}
+        transitionTimingFunction="ease"
+        styles={(theme) => ({
+          // dropdown: {
+          //   zIndex: 999,
+          // },
+          input: {
+            '&:focus': {
+              borderColor: '#6942BB',
+            },
+          },
+
+          item: {
+            '&[data-selected]': {
+              '&, &:hover': {
+                backgroundColor: '#6942BB',
+              },
+            },
+          },
+        })}
         value={formInputs.sort}
         onChange={(e: string) => {
           setFormInputs((prev: PreviousFormInput) => {
@@ -123,11 +167,12 @@ export function InputWithFilter({ props, handleSearch }: InputProps) {
             formInputs.sort
           );
 
-          setFormInputs({
-            type: 'All',
-            search_query: '',
-            sort: 'POPULARITY_DESC',
-          });
+          //Setting Default Values Back
+          // setFormInputs({
+          //   type: 'All',
+          //   search_query: '',
+          //   sort: 'POPULARITY_DESC',
+          // });
         }}
         size={32}
         radius="xl"

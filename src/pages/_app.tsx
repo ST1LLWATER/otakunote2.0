@@ -24,7 +24,7 @@ const MyApp: AppType = ({
   return (
     <SessionProvider session={session}>
       <ThemeProvider
-        theme={{ fontFamily: 'Open Sans', colorScheme: 'dark' }}
+        theme={{ colorScheme: 'dark' }}
         withGlobalStyles
         withNormalizeCSS
       >
@@ -47,6 +47,8 @@ const MyApp: AppType = ({
           <div
             style={{
               width: '100%',
+              position: 'relative',
+              zIndex: 100,
             }}
           >
             <HeaderResponsive links={Links.links} />

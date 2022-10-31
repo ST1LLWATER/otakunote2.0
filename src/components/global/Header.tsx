@@ -25,6 +25,14 @@ const useStyles = createStyles((theme) => ({
     zIndex: 1,
   },
 
+  menuItem: {
+    // padding: '0 15px',
+  },
+
+  menuDropdown: {
+    zIndex: 100,
+  },
+
   dropdown: {
     position: 'absolute',
     top: HEADER_HEIGHT,
@@ -35,6 +43,7 @@ const useStyles = createStyles((theme) => ({
     borderTopLeftRadius: 0,
     borderTopWidth: 0,
     overflow: 'hidden',
+    fontSize: 14,
 
     [theme.fn.largerThan('sm')]: {
       display: 'none',
@@ -75,9 +84,9 @@ const useStyles = createStyles((theme) => ({
 
   link: {
     display: 'block',
-    lineHeight: 1,
-    padding: '8px 12px',
-    margin: '0 8px',
+    lineHeight: '24px',
+    padding: '4px 12px',
+    // margin: '0 8px',
     cursor: 'pointer',
     borderRadius: theme.radius.sm,
     textDecoration: 'none',
@@ -85,14 +94,18 @@ const useStyles = createStyles((theme) => ({
       theme.colorScheme === 'dark'
         ? theme.colors.dark[0]
         : theme.colors.gray[7],
-    fontSize: theme.fontSizes.sm,
-    fontWeight: 500,
+    fontSize: theme.fontSizes.md,
+    fontWeight: 600,
 
     '&:hover': {
       backgroundColor:
         theme.colorScheme === 'dark'
           ? theme.colors.dark[6]
           : theme.colors.gray[0],
+    },
+
+    '&:focus': {
+      outline: 'none',
     },
 
     [theme.fn.smallerThan('sm')]: {
@@ -103,12 +116,14 @@ const useStyles = createStyles((theme) => ({
 
   linkActive: {
     '&, &:hover': {
-      backgroundColor: theme.fn.variant({
-        variant: 'light',
-        color: theme.primaryColor,
-      }).background,
-      color: theme.fn.variant({ variant: 'light', color: theme.primaryColor })
-        .color,
+      // backgroundColor: theme.fn.variant({
+      //   variant: 'light',
+      //   color: theme.primaryColor,
+      // }).background,
+      // color: theme.fn.variant({ variant: 'light', color: theme.primaryColor })
+      //   .color,
+      backgroundColor: 'rgba(105, 66, 187,0.5)',
+      color: 'white',
     },
   },
 
@@ -128,6 +143,8 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
   const Router = useRouter();
 
   const { data: session } = useSession();
+
+  console.log('rerender');
 
   useEffect(() => {
     setActive(Router.pathname);
@@ -160,7 +177,15 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
         <div className={classes.user}>
           {session && session.user ? (
             <>
-              <Menu trigger="hover" exitTransitionDuration={0}>
+              <Menu
+                trigger="hover"
+                position="bottom"
+                exitTransitionDuration={0}
+                classNames={{
+                  item: classes.menuItem,
+                  dropdown: classes.menuDropdown,
+                }}
+              >
                 <Menu.Target>
                   <Center className={classes.link}>
                     <span className={classes.linkLabel}>
@@ -170,9 +195,12 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
                   </Center>
                 </Menu.Target>
                 <Menu.Dropdown>
-                  <a onClick={(event) => signOut()}>
-                    <Menu.Item>Sign Out</Menu.Item>
-                  </a>
+                  <Menu.Item>
+                    <a>Import MAL Watchlist</a>
+                  </Menu.Item>
+                  <Menu.Item>
+                    <a onClick={(event) => signOut()}>Sign Out</a>
+                  </Menu.Item>
                 </Menu.Dropdown>
               </Menu>
             </>

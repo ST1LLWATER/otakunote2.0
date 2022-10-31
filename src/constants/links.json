@@ -13,8 +13,8 @@
       "label": "My Manga"
     },
     {
-      "link": "/calendar",
-      "label": "Calendar"
+      "link": "/home",
+      "label": "Home"
     }
   ]
 }
