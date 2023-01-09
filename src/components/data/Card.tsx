@@ -1,4 +1,4 @@
-import React, { useRef, MouseEvent } from 'react';
+import React, { useRef, MouseEvent, useState, useEffect } from 'react';
 import styles from '../../styles/card.module.css';
 import { RiStarSFill } from 'react-icons/ri';
 import { Badge, Button } from '@mantine/core';
@@ -14,12 +14,14 @@ import filter_data from '../../constants/filter_data.json';
 interface AnimeCard {
   anime: AnimeInterface;
   watchlisted: boolean;
+  isLoggedIn: boolean;
 }
 
-const Card = ({ anime, watchlisted }: AnimeCard) => {
+const Card = ({ anime, watchlisted, isLoggedIn }: AnimeCard) => {
   const slider = useRef<HTMLDivElement>(null);
   const [isModalOpen, setIsModalOpen] = useAtom(ModalState);
   const [selectedAnime, setSelectedAnime] = useAtom(selectedAnimeAtom);
+  const [isHovered, setIsHovered] = useState<string>('translateY(54px)');
 
   let mouseDown = false;
   let startX: number, scrollLeft: number;
@@ -45,9 +47,33 @@ const Card = ({ anime, watchlisted }: AnimeCard) => {
     slider.current!.scrollLeft = scrollLeft - scroll;
   }
 
+  function onHover() {
+    console.log('MOUSE ENTER');
+    setIsHovered('translateY(0px)');
+  }
+
+  function exitHover() {
+    if (isModalOpen) {
+      return;
+    }
+    setIsHovered('translateY(54px)');
+  }
+
+  useEffect(() => {
+    if (!isModalOpen) {
+      setTimeout(() => {
+        setIsHovered('translateY(54px)');
+      }, 100);
+    }
+  }, [isModalOpen]);
+
   return (
     <>
       <div
+        onMouseOver={onHover}
+        onMouseLeave={exitHover}
+        // onMouseEnter={onHover}
+        // onMouseLeave={exitHover}
         style={{
           background: `url(${anime.coverImage.large}) no-repeat center center/cover`,
         }}
@@ -62,7 +88,12 @@ const Card = ({ anime, watchlisted }: AnimeCard) => {
         <Badge className={styles.badge} size="sm">
           {anime.type === 'ANIME' ? 'Anime' : 'Manga'}
         </Badge>
-        <div className={styles.card_content}>
+        <div
+          style={{
+            transform: `${isHovered}`,
+          }}
+          className={`${styles.card_content}`}
+        >
           <div
             ref={slider}
             onMouseDown={startDragging}
@@ -102,10 +133,18 @@ const Card = ({ anime, watchlisted }: AnimeCard) => {
             )}
           </div>
           <div className={styles.actions}>
-            {watchlisted ? <WATCHLIST_BUTTON /> : <REMOVE_BUTTON />}
+            {watchlisted ? (
+              <REMOVE_BUTTON />
+            ) : (
+              <WATCHLIST_BUTTON
+                mediaId={anime.id}
+                mediaType={anime.type}
+                isLoggedIn={isLoggedIn}
+              />
+            )}
 
             <Button
-              styles={(theme) => ({
+              styles={() => ({
                 root: {
                   color: 'white',
                   padding: '4px 8px',

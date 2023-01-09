@@ -13,6 +13,7 @@ import Links from '../constants/links.json';
 import Footer from '../components/global/Footer';
 import InfoModal from '../components/data/Modal';
 import { useAtom } from 'jotai';
+import { Toaster } from 'react-hot-toast';
 import { selectedAnimeAtom } from '../store/animeStore';
 
 const MyApp: AppType = ({
@@ -28,6 +29,7 @@ const MyApp: AppType = ({
         withGlobalStyles
         withNormalizeCSS
       >
+        <Toaster />
         {selectedAnime && (
           <InfoModal
             anime={selectedAnime.anime}
@@ -116,5 +118,5 @@ export default withTRPC<AppRouter>({
   /**
    * @link https://trpc.io/docs/ssr
    */
-  ssr: false,
+  ssr: true,
 })(MyApp);

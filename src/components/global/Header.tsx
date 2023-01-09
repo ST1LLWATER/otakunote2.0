@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import {
   createStyles,
   Header,
-  Container,
   Group,
   Burger,
   Paper,
@@ -129,6 +128,9 @@ const useStyles = createStyles((theme) => ({
 
   linkLabel: {
     marginRight: 5,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }));
 
@@ -188,10 +190,10 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
               >
                 <Menu.Target>
                   <Center className={classes.link}>
-                    <span className={classes.linkLabel}>
-                      {session.user.name}
-                    </span>
-                    <BsChevronDown size={12} />
+                    <div className={classes.linkLabel}>{session.user.name}</div>
+                    <div>
+                      <BsChevronDown size={12} />
+                    </div>
                   </Center>
                 </Menu.Target>
                 <Menu.Dropdown>

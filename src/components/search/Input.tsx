@@ -2,9 +2,7 @@ import {
   TextInput,
   TextInputProps,
   ActionIcon,
-  useMantineTheme,
   createStyles,
-  Popover,
   Select,
 } from '@mantine/core';
 import { AiOutlineSearch } from 'react-icons/ai';
@@ -69,6 +67,7 @@ export function InputWithFilter({ props, handleSearch }: InputProps) {
   return (
     <div className={classes.inputWrapper}>
       <TextInput
+        // label="Search"
         className={classes.input}
         styles={{
           input: {
@@ -90,7 +89,7 @@ export function InputWithFilter({ props, handleSearch }: InputProps) {
         {...props}
       />
       <Select
-        // label="Type"
+        // label="Media Type"
         placeholder="Select Type"
         transition="pop-top-left"
         transitionDuration={80}
@@ -127,7 +126,7 @@ export function InputWithFilter({ props, handleSearch }: InputProps) {
         ]}
       />
       <Select
-        // label="Sort"
+        // label="Sort By"
         size="sm"
         placeholder="Sort By"
         transition="pop-top-left"

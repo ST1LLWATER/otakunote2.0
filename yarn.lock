@@ -408,6 +408,13 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@mantine/carousel@^5.8.4":
+  version "5.8.4"
+  resolved "https://registry.yarnpkg.com/@mantine/carousel/-/carousel-5.8.4.tgz#1a73b56c3dadbff406ad09349a8f5913628bd5df"
+  integrity sha512-XbWYLv3qqzGsvoFWVS9Il12ZGNKO26X6qbpC6yJND9W002XlPf3yyl+mpW3dhb5r7yDF2FqAkbj9zE6E8pomLg==
+  dependencies:
+    "@mantine/utils" "5.8.4"
+
 "@mantine/core@^5.3.0":
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/@mantine/core/-/core-5.3.0.tgz#32d3784ef1febf1592603aaefec4f7ecc251be26"
@@ -436,6 +443,11 @@
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-5.3.0.tgz#cb57643500819354ede198151a2a072375e9e122"
   integrity sha512-On89C5CRTghwaaEwGXqjY5FZ/VYNoBllbBoDl2hb7l4pxLakpY9eAQeuOOJdPb3bBiBoD/e29tCkG+UcVYfr4w==
+
+"@mantine/utils@5.8.4":
+  version "5.8.4"
+  resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-5.8.4.tgz#46d535abd6ba76662de23d9c15daa28a11312200"
+  integrity sha512-JR5eg406hkBPmYKBznDpisv54TZO7tNw1BAFDlgXsqGE6N8EZnxTEpuS+i9rFLsqqt0QGyvmQFIl6vfser0FNQ==
 
 "@next-auth/prisma-adapter@^1.0.4":
   version "1.0.4"
@@ -1370,6 +1382,18 @@ dot-prop@^5.1.0:
   dependencies:
     is-obj "^2.0.0"
 
+embla-carousel-react@^7.0.5:
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/embla-carousel-react/-/embla-carousel-react-7.0.5.tgz#c6a079e382432335e34adb16bb11558df047760c"
+  integrity sha512-qhw980gKj7G+O5d3WSwj0TyhcbpGP3DqJPiAatt1t3wEEcZqn7csaIfLh4e1N/0kna9sZfZZRzz+//NSrUodSg==
+  dependencies:
+    embla-carousel "7.0.5"
+
+embla-carousel@7.0.5:
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/embla-carousel/-/embla-carousel-7.0.5.tgz#b43e590c072d06a5b11d4ce19d024f5f07a62862"
+  integrity sha512-loRcu0La0F7bhEMwbvgpi14iaaIEdwacH1xoplnaYfwN4KMgECkiuLgu4lx+v6MYd6lSpg/bw7ZxEuLUwYjavg==
+
 emoji-regex@^8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-8.0.0.tgz#e818fd69ce5ccfcb404594f842963bf53164cc37"
@@ -1917,6 +1941,11 @@ globby@^11.1.0:
     ignore "^5.2.0"
     merge2 "^1.4.1"
     slash "^3.0.0"
+
+goober@^2.1.10:
+  version "2.1.11"
+  resolved "https://registry.yarnpkg.com/goober/-/goober-2.1.11.tgz#bbd71f90d2df725397340f808dbe7acc3118e610"
+  integrity sha512-5SS2lmxbhqH0u9ABEWq7WPU69a4i2pYcHeCxqaNq6Cw3mnrF0ghWNM4tEGid4dKy8XNIAUbuThuozDHHKJVh3A==
 
 graceful-fs@^4.1.6, graceful-fs@^4.2.0:
   version "4.2.10"
@@ -2846,6 +2875,13 @@ react-dom@18.2.0:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
+
+react-hot-toast@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/react-hot-toast/-/react-hot-toast-2.4.0.tgz#b91e7a4c1b6e3068fc599d3d83b4fb48668ae51d"
+  integrity sha512-qnnVbXropKuwUpriVVosgo8QrB+IaPJCpL8oBI6Ov84uvHZ5QQcTp2qg6ku2wNfgJl6rlQXJIQU5q+5lmPOutA==
+  dependencies:
+    goober "^2.1.10"
 
 react-icons@^4.4.0:
   version "4.4.0"

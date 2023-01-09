@@ -14,10 +14,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id String @id @default(cuid())
-}
-
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -68,11 +64,10 @@ model Watchlist {
     id        String    @id @default(cuid())
     userId    String
     user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-    itemId    String
     mediaId   Int
-    episodes  Int[]
-    watching  Boolean
-    completed Boolean
+    episodes  Int       @default(0)
+    watching  Boolean   @default(false)
+    completed Boolean   @default(false)
     mediaType MediaType
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt

@@ -18,9 +18,13 @@
     z-index: 1;
   }
 
-  .card_parent:hover > .card_content{
-    transform: translateY(0);
+.hovering{
+  transform: translateY(0);
 }
+
+/* .card_parent:hover > .card_content{
+    transform: translateY(0);
+} */
 
 .badge{
     position: absolute;

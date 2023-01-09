@@ -1,8 +1,9 @@
 import React from 'react';
 import Card from '../data/Card';
 import { useAtomValue } from 'jotai';
-import { renderAnimesAtom } from '../../pages/search';
+import { renderAnimesAtom } from '../../store/animeStore';
 import { createStyles } from '@mantine/core';
+import { useUser } from '../../hooks/useUser';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -33,12 +34,18 @@ const useStyles = createStyles((theme) => ({
 const CardWrapper = () => {
   const animes = useAtomValue(renderAnimesAtom);
   const { classes, cx } = useStyles();
+  const isLoggedIn = useUser();
   return (
     <>
       <div className={classes.wrapper}>
-        {animes?.map((anime, index) => (
+        {animes?.map((anime) => (
           <>
-            <Card key={anime.id} anime={anime} watchlisted={false} />
+            <Card
+              key={anime.id}
+              isLoggedIn={isLoggedIn}
+              anime={anime}
+              watchlisted={false}
+            />
           </>
         ))}
       </div>

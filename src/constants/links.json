@@ -5,15 +5,11 @@
       "label": "Search"
     },
     {
-      "link": "/anime",
-      "label": "My Anime"
+      "link": "/watchlist",
+      "label": "Watchlist"
     },
     {
-      "link": "/manga",
-      "label": "My Manga"
-    },
-    {
-      "link": "/home",
+      "link": "/",
       "label": "Home"
     }
   ]
