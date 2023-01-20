@@ -1,5 +1,5 @@
 import { trpc } from '../utils/trpc';
-import { WatchListPayload } from '../components/data/ActionButtons';
+import { WatchListPayload } from '../components/ActionButtons';
 import toast from 'react-hot-toast';
 
 export const addAnimeToWatchlist = async ({
