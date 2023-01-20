@@ -22,6 +22,7 @@
     "@trpc/next": "^9.27.2",
     "@trpc/react": "^9.27.2",
     "@trpc/server": "^9.27.2",
+    "@types/react-truncate": "^2.3.4",
     "embla-carousel-react": "^7.0.5",
     "graphql": "^16.6.0",
     "graphql-request": "^5.0.0",
@@ -33,6 +34,7 @@
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.4.0",
     "react-query": "^3.39.2",
+    "react-truncate": "^2.4.0",
     "superjson": "^1.9.1",
     "zod": "^3.18.0"
   },

@@ -4,7 +4,7 @@ import { RiStarSFill } from 'react-icons/ri';
 import { Modal } from '@mantine/core';
 import { AnimeInterface } from '../../interfaces/AnimeInterface';
 import { atom, useAtom } from 'jotai';
-import filter_data from '../../constants/filter_data.json';
+import { ConstantData } from '../../constants/filter_data';
 
 export const ModalState = atom<boolean>(false);
 
@@ -34,6 +34,7 @@ const InfoModal = ({ anime, watchlisted }: InfoModal) => {
             padding: '0px !important',
             borderRadius: '8px',
             overflow: 'hidden',
+            margin: '0px',
           },
 
           body: {
@@ -60,26 +61,22 @@ const InfoModal = ({ anime, watchlisted }: InfoModal) => {
         size="1000px"
         transition="scale"
       >
-        <div
-          style={
-            {
-              // position: 'relative',
-            }
-          }
-        >
+        <div>
           <div
             style={{
               position: 'relative',
-              zIndex: -1,
+              zIndex: 0,
+              background: `url(${anime?.bannerImage})  center center/cover no-repeat`,
             }}
           >
             <div
               className={styles.overlay}
               style={{
+                zIndex: 1,
                 display: anime.bannerImage ? '' : 'none',
               }}
             ></div>
-            <img
+            {/* <img
               src={anime?.bannerImage}
               // src="https://s4.anilist.co/file/anilistcdn/media/anime/banner/127230-lf01ya5ny8aH.jpg"
               // width={1000}
@@ -88,18 +85,10 @@ const InfoModal = ({ anime, watchlisted }: InfoModal) => {
               style={{
                 width: '100%',
                 height: '100%',
-                // maxHeight: '300px',
                 objectFit: 'cover',
               }}
-            />
-            <div
-              className={styles.metadata_parent}
-              style={{
-                position: anime.bannerImage ? 'absolute' : 'static',
-                margin: '15px 0',
-                padding: '15px 50px',
-              }}
-            >
+            /> */}
+            <div className={styles.metadata_parent}>
               <div className={styles.metadata}>
                 <div className={styles.metadata_item}>
                   <p>{anime?.averageScore / 10}</p>
@@ -113,7 +102,7 @@ const InfoModal = ({ anime, watchlisted }: InfoModal) => {
                 {anime.startDate.year && (
                   <div className={styles.metadata_item}>
                     {anime.startDate.month && (
-                      <p>{filter_data.Months[anime.startDate.month - 1]}</p>
+                      <p>{ConstantData.Months[anime.startDate.month - 1]}</p>
                     )}
                     <p>{anime.startDate.year}</p>
                   </div>

@@ -1,10 +1,10 @@
 .overlay{
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+    /* background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)); */
     background: linear-gradient(180deg, rgba(34, 32, 39, 0) 0%, #222027 75.52%, #1A1B1E 100%);
-    /* background: linear-gradient(360deg, #222027 21.35%, rgba(23, 21, 27, 0.18) 100%); */
     position: absolute;
     /* top: 0; */
     /* left: 0; */
+    z-index: 1;
     bottom:-30px;
     width: 100%;
     height: 100%;
@@ -12,13 +12,13 @@
   }
 
   .metadata_parent{
-    /* position: absolute; */
-    bottom: 10px;
+    position: relative;
+    z-index: 2;
+    /* bottom: 10px; */
     display: flex;
     flex-direction: column;
     gap: 15px;
-    margin-left: 50px;
-
+    padding: 55px 55px 10px 55px;
   }
 
 .metadata{
@@ -43,7 +43,10 @@
     line-height: 18px;
     border: 1px solid rgba(161, 161, 161, 0.945);
     border-radius: 999px;
+  }
 
+  .content{
+    margin-top: 30px;
   }
 
   .title{

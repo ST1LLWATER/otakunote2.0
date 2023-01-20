@@ -1,4 +1,4 @@
-{
+export const ConstantData={
   "GenreCollection": [
     { "value": "Action", "label": "Action" },
     { "value": "Adventure", "label": "Adventure" },
@@ -20,24 +20,12 @@
     { "value": "Supernatural", "label": "Supernatural" },
     { "value": "Thriller", "label": "Thriller" }
   ],
-  "Season": [
-    {
-      "value": "Winter",
-      "label": "Winter"
-    },
-    {
-      "value": "Spring",
-      "label": "Spring"
-    },
-    {
-      "value": "Summer",
-      "label": "Summer"
-    },
-    {
-      "value": "Fall",
-      "label": "Fall"
-    }
-  ],
+  "Season": {
+    "WINTER": ["January", "February", "March"],
+    "SPRING": ["April", "May", "June"],
+    "SUMMER": ["July", "August", "September"],
+    "FALL": ["October", "November", "December"]
+  },
   "Sort": [
     { "value": "TITLE_ROMAJI", "label": "Title" },
     { "value": "POPULARITY_DESC", "label": "Popularity" },

@@ -15,6 +15,7 @@ import { signIn, useSession, signOut } from 'next-auth/react';
 import { MdOutlineMovieFilter } from 'react-icons/md';
 import { BsChevronDown } from 'react-icons/bs';
 import Link from 'next/link';
+import { useAtom } from 'jotai';
 
 const HEADER_HEIGHT = 60;
 
@@ -59,6 +60,20 @@ const useStyles = createStyles((theme) => ({
 
     [theme.fn.smallerThan('sm')]: {
       justifyContent: 'space-between',
+    },
+
+    '> div': {
+      width: '100%',
+      display: 'flex',
+
+      '&:nth-of-child(2)': {
+        justifyContent: 'center',
+        backgrounColor: 'green',
+      },
+
+      '&:nth-of-child(3)': {
+        justifyContent: 'flex-end',
+      },
     },
   },
 
@@ -171,10 +186,14 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
   return (
     <Header height={HEADER_HEIGHT} className={classes.root}>
       <div className={classes.header}>
-        <MdOutlineMovieFilter size={30} color="#6942BB" />
-        <Group spacing={5} className={classes.links}>
-          {items}
-        </Group>
+        <div>
+          <MdOutlineMovieFilter size={30} color="#6942BB" />
+        </div>
+        <div>
+          <Group spacing={5} className={classes.links}>
+            {items}
+          </Group>
+        </div>
 
         <div className={classes.user}>
           {session && session.user ? (

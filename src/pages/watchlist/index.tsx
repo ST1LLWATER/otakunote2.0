@@ -1,23 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { trpc } from '../../utils/trpc';
-import { setLocaleWatchlist } from '../../hooks/useLocaleWatchlist';
+import { getWatchlist } from '../../functions/dataFetcherFunctions';
 import CardWrapper from '../../components/global/CardWrapper';
 import { useAtom } from 'jotai';
-import { renderAnimesAtom } from '../../store/animeStore';
+import { toast } from 'react-hot-toast';
+import { AnimeInterface } from '../../interfaces/AnimeInterface';
 
 const Watchlist = () => {
-  const [, setRenderAnimes] = useAtom(renderAnimesAtom);
-  trpc.useQuery(['watchlist.get-media-by-userid'], {
-    onSuccess: async (data) => {
-      let animeData = await setLocaleWatchlist(data);
-      setRenderAnimes(animeData);
-    },
-  });
-  // console.log({ data, status });
+  const [watchlist, setWatchlist] = useState<AnimeInterface[] | null>(null);
 
   return (
     <>
-      <CardWrapper />
+      <CardWrapper animes={watchlist} />
     </>
   );
 };

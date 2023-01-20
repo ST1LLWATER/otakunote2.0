@@ -3,7 +3,7 @@ import { BsPlus } from 'react-icons/bs';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 // import { addAnimeToWatchlist } from '../../functions/miscFunctions';
-import { trpc } from '../../utils/trpc';
+import { trpc } from '../utils/trpc';
 
 export type WatchListPayload = {
   isLoggedIn: boolean;

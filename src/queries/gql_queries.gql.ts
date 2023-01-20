@@ -3,6 +3,7 @@ import { gql } from 'graphql-request';
 export const SEARCH_QUERY = gql`
   query (
     $page: Int = 1
+    $perPage: Int = 15
     $type: MediaType
     $search_query: String
     $id_in: [Int]
@@ -13,7 +14,7 @@ export const SEARCH_QUERY = gql`
     $seasonYear: Int
     $sort: [MediaSort] = [POPULARITY_DESC]
   ) {
-    Page(page: $page, perPage: 50) {
+    Page(page: $page, perPage: $perPage) {
       pageInfo {
         total
         perPage

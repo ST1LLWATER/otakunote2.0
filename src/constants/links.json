@@ -1,16 +1,16 @@
 {
   "links": [
     {
-      "link": "/search",
-      "label": "Search"
+      "link": "/",
+      "label": "Home"
     },
     {
       "link": "/watchlist",
       "label": "Watchlist"
     },
     {
-      "link": "/",
-      "label": "Home"
+      "link": "/search",
+      "label": "Search"
     }
   ]
 }

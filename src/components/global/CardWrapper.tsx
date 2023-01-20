@@ -1,9 +1,8 @@
 import React from 'react';
 import Card from '../data/Card';
-import { useAtomValue } from 'jotai';
-import { renderAnimesAtom } from '../../store/animeStore';
 import { createStyles } from '@mantine/core';
 import { useUser } from '../../hooks/useUser';
+import { AnimeInterface } from '../../interfaces/AnimeInterface';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -14,7 +13,7 @@ const useStyles = createStyles((theme) => ({
     gridTemplateColumns: `repeat(5,1fr)`,
     placeItems: 'center',
     gap: '32px',
-    margin: '0 10px',
+    // margin: '30px 10px',
 
     [theme.fn.smallerThan('lg')]: {
       gridTemplateColumns: `repeat(4,1fr)`,
@@ -31,22 +30,23 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const CardWrapper = () => {
-  const animes = useAtomValue(renderAnimesAtom);
+interface CardWrapperProps {
+  animes: AnimeInterface[] | null;
+}
+
+const CardWrapper = (props: CardWrapperProps) => {
   const { classes, cx } = useStyles();
   const isLoggedIn = useUser();
   return (
     <>
       <div className={classes.wrapper}>
-        {animes?.map((anime) => (
-          <>
-            <Card
-              key={anime.id}
-              isLoggedIn={isLoggedIn}
-              anime={anime}
-              watchlisted={false}
-            />
-          </>
+        {props.animes?.map((anime) => (
+          <Card
+            key={anime.id}
+            isLoggedIn={isLoggedIn}
+            anime={anime}
+            watchlisted={false}
+          />
         ))}
       </div>
     </>

@@ -14,7 +14,7 @@ import Footer from '../components/global/Footer';
 import InfoModal from '../components/data/Modal';
 import { useAtom } from 'jotai';
 import { Toaster } from 'react-hot-toast';
-import { selectedAnimeAtom } from '../store/animeStore';
+import { selectedAnimeAtom } from '../store';
 
 const MyApp: AppType = ({
   Component,

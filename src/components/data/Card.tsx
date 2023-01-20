@@ -1,13 +1,14 @@
 import React, { useRef, MouseEvent, useState, useEffect } from 'react';
+import Truncate from 'react-truncate';
 import styles from '../../styles/card.module.css';
 import { RiStarSFill } from 'react-icons/ri';
 import { Badge, Button } from '@mantine/core';
 import { AnimeInterface } from '../../interfaces/AnimeInterface';
 import { ModalState } from './Modal';
-import { WATCHLIST_BUTTON, REMOVE_BUTTON } from './ActionButtons';
+import { WATCHLIST_BUTTON, REMOVE_BUTTON } from '../ActionButtons';
 import { useAtom } from 'jotai';
-import { selectedAnimeAtom } from '../../store/animeStore';
-import filter_data from '../../constants/filter_data.json';
+import { selectedAnimeAtom } from '../../store';
+import { ConstantData } from '../../constants/filter_data';
 
 // const [description, setDescription] = useState(props.description);
 
@@ -48,7 +49,6 @@ const Card = ({ anime, watchlisted, isLoggedIn }: AnimeCard) => {
   }
 
   function onHover() {
-    console.log('MOUSE ENTER');
     setIsHovered('translateY(0px)');
   }
 
@@ -111,7 +111,9 @@ const Card = ({ anime, watchlisted, isLoggedIn }: AnimeCard) => {
             })}
           </div>
           <div className={styles.title}>
-            {anime.title.english ?? anime.title.romaji}
+            <Truncate lines={2} ellipsis={<span>...</span>}>
+              {anime.title.english ?? anime.title.romaji}
+            </Truncate>
           </div>
           <div className={styles.metadata}>
             <div className={styles.metadata_item}>
@@ -126,7 +128,7 @@ const Card = ({ anime, watchlisted, isLoggedIn }: AnimeCard) => {
             {anime.startDate.year && (
               <div className={styles.metadata_item}>
                 {anime.startDate.month && (
-                  <p>{filter_data.Months[anime.startDate.month - 1]}</p>
+                  <p>{ConstantData.Months[anime.startDate.month - 1]}</p>
                 )}
                 <p>{anime.startDate.year}</p>
               </div>
