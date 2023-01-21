@@ -50,14 +50,14 @@ export type FormInput = {
   sort: string | undefined;
 };
 
-const Search: NextPage<Props> = ({ query }) => {
+const Search: NextPage = () => {
   const [searchedAnimes, setSearchedAnimes] = useState<AnimeInterface[] | null>(
     null
   );
   const [formData, setFormData] = useState<FormInput>({
-    type: undefined,
-    search_query: undefined,
-    sort: undefined,
+    type: '',
+    search_query: '',
+    sort: '',
   });
   const [loading, setLoading] = useAtom(loadingAtom);
   const { classes, cx } = useStyles();
@@ -82,13 +82,13 @@ const Search: NextPage<Props> = ({ query }) => {
   // };
 
   const handleSearch: () => void = async () => {
+    console.log('HANDLE SEARCH');
     let variables: Partial<FormInput> = {};
     const url_query = Object.keys(Router.query).length;
     if (url_query) {
       if (formData.search_query) {
         variables = Router.query;
         if (JSON.stringify(variables) === JSON.stringify(formData)) {
-          console.log('INPUT IS SAME RETURNING');
           return;
         } else {
           variables = {
@@ -106,19 +106,12 @@ const Search: NextPage<Props> = ({ query }) => {
       };
     }
 
-    console.log(variables);
-
     Router.push({
       pathname: '/search',
       query: variables,
     });
 
     if (!url_query) return;
-    // const searchParams = {
-    //   type: formData.type,
-    //   search_query: formData.search_query,
-    //   sort: formData.sort,
-    // };
 
     if (variables.type === 'All') {
       variables = {
@@ -126,13 +119,6 @@ const Search: NextPage<Props> = ({ query }) => {
         sort: variables.sort,
       };
     }
-    // else {
-    //   variables = {
-    //     search_query,
-    //     sort,
-    //     type,
-    //   };
-    // }
 
     try {
       const data = await client.request<APIInterface>(
@@ -171,11 +157,5 @@ const Search: NextPage<Props> = ({ query }) => {
     </>
   );
 };
-
-export async function getServerSideProps({ query }: Props) {
-  return {
-    props: { query },
-  };
-}
 
 export default Search;

@@ -15,7 +15,6 @@ import { signIn, useSession, signOut } from 'next-auth/react';
 import { MdOutlineMovieFilter } from 'react-icons/md';
 import { BsChevronDown } from 'react-icons/bs';
 import Link from 'next/link';
-import { useAtom } from 'jotai';
 
 const HEADER_HEIGHT = 60;
 

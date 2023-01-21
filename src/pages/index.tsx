@@ -101,7 +101,6 @@ const Home = () => {
   useAnimationOffsetEffect(embla, TRANSITION_DURATION);
 
   useEffect(() => {
-    console.log(ongoing);
     if (ongoing) return;
     getCalendar({ setOngoing });
   }, []);

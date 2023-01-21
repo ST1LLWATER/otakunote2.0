@@ -38,8 +38,6 @@ const Card = ({ anime, watchlisted, isLoggedIn }: AnimeCard) => {
   };
 
   function mouseMoveEvent(e: MouseEvent<HTMLDivElement>) {
-    // e.preventDefault();
-
     if (!mouseDown) {
       return;
     }
@@ -75,7 +73,7 @@ const Card = ({ anime, watchlisted, isLoggedIn }: AnimeCard) => {
         // onMouseEnter={onHover}
         // onMouseLeave={exitHover}
         style={{
-          background: `url(${anime.coverImage.large}) no-repeat center center/cover`,
+          background: `url(${anime.coverImage.extraLarge}) no-repeat center center/cover`,
         }}
         className={styles.card_parent}
       >
