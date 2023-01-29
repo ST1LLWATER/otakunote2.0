@@ -9,6 +9,7 @@ const useStyles = createStyles((theme) => ({
     flex: 1,
     borderRadius: 0,
     border: 'none',
+    width: '100%',
     '&:focus': {
       outline: 'none',
       borderBottom: `1px solid ${
@@ -21,9 +22,29 @@ const useStyles = createStyles((theme) => ({
   inputWrapper: {
     display: 'flex',
     isolation: 'isolate',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     gap: '10px',
+
+    [theme.fn.smallerThan('sm')]: {
+      flexDirection: 'column',
+      gap: '20px',
+    },
+  },
+
+  filters: {
+    display: 'flex',
+    gap: '10px',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    [theme.fn.smallerThan('sm')]: {
+      width: '100%',
+    },
+
+    '>div': {
+      flexGrow: 1,
+    },
   },
 }));
 
@@ -70,80 +91,82 @@ function Inputs(props: InputProps) {
           ),
         [props.formData.search_query]
       )}
-      {useMemo(
-        () =>
-          'type' in props.formData && (
-            <Select
-              placeholder="Select Type"
-              transition="pop-top-left"
-              transitionDuration={80}
-              transitionTimingFunction="ease"
-              size="sm"
-              styles={(theme) => ({
-                input: {
-                  '&:focus': {
-                    borderColor: '#6942BB',
-                  },
-                },
-
-                item: {
-                  '&[data-selected]': {
-                    '&, &:hover': {
-                      backgroundColor: '#6942BB',
+      <div className={classes.filters}>
+        {useMemo(
+          () =>
+            'type' in props.formData && (
+              <Select
+                placeholder="Select Type"
+                transition="pop-top-left"
+                transitionDuration={80}
+                transitionTimingFunction="ease"
+                size="sm"
+                styles={(theme) => ({
+                  input: {
+                    '&:focus': {
+                      borderColor: '#6942BB',
                     },
                   },
-                },
-              })}
-              value={props.formData.type}
-              onChange={(e: string) =>
-                props.setFormData((prev: FormInput) => {
-                  return { ...prev, type: e };
-                })
-              }
-              data={[
-                { value: 'All', label: 'All' },
-                { value: 'ANIME', label: 'Anime' },
-                { value: 'MANGA', label: 'Manga' },
-              ]}
-            />
-          ),
-        [props.formData.type]
-      )}
-      {useMemo(
-        () =>
-          'sort' in props.formData && (
-            <Select
-              size="sm"
-              placeholder="Sort By"
-              transition="pop-top-left"
-              transitionDuration={80}
-              transitionTimingFunction="ease"
-              styles={(theme) => ({
-                input: {
-                  '&:focus': {
-                    borderColor: '#6942BB',
-                  },
-                },
 
-                item: {
-                  '&[data-selected]': {
-                    '&, &:hover': {
-                      backgroundColor: '#6942BB',
+                  item: {
+                    '&[data-selected]': {
+                      '&, &:hover': {
+                        backgroundColor: '#6942BB',
+                      },
                     },
                   },
-                },
-              })}
-              value={props.formData.sort}
-              onChange={(e: string) => {
-                props.setFormData((prev: FormInput) => {
-                  return { ...prev, sort: e };
-                });
-              }}
-              data={ConstantData.Sort}
-            />
-          ),
-        [props.formData.sort]
-      )}
+                })}
+                value={props.formData.type}
+                onChange={(e: string) =>
+                  props.setFormData((prev: FormInput) => {
+                    return { ...prev, type: e };
+                  })
+                }
+                data={[
+                  { value: 'All', label: 'All' },
+                  { value: 'ANIME', label: 'Anime' },
+                  { value: 'MANGA', label: 'Manga' },
+                ]}
+              />
+            ),
+          [props.formData.type]
+        )}
+        {useMemo(
+          () =>
+            'sort' in props.formData && (
+              <Select
+                size="sm"
+                placeholder="Sort By"
+                transition="pop-top-left"
+                transitionDuration={80}
+                transitionTimingFunction="ease"
+                styles={(theme) => ({
+                  input: {
+                    '&:focus': {
+                      borderColor: '#6942BB',
+                    },
+                  },
+
+                  item: {
+                    '&[data-selected]': {
+                      '&, &:hover': {
+                        backgroundColor: '#6942BB',
+                      },
+                    },
+                  },
+                })}
+                value={props.formData.sort}
+                onChange={(e: string) => {
+                  props.setFormData((prev: FormInput) => {
+                    return { ...prev, sort: e };
+                  });
+                }}
+                data={ConstantData.Sort}
+              />
+            ),
+          [props.formData.sort]
+        )}
+      </div>
     </div>
   );
 }

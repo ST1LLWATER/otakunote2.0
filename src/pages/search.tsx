@@ -10,7 +10,7 @@ import { NextPage } from 'next';
 import { loadingAtom } from '../store';
 import { toast } from 'react-hot-toast';
 import { AnimeInterface } from '../interfaces/AnimeInterface';
-import { ActionIcon, createStyles } from '@mantine/core';
+import { ActionIcon, Button, createStyles } from '@mantine/core';
 import { BsArrowRight } from 'react-icons/bs';
 
 const useStyles = createStyles((theme) => ({
@@ -26,6 +26,7 @@ const useStyles = createStyles((theme) => ({
 
     [theme.fn.smallerThan('md')]: {
       maxWidth: '95%',
+      flexDirection: 'column',
     },
   },
 
@@ -82,7 +83,6 @@ const Search: NextPage = () => {
   // };
 
   const handleSearch: () => void = async () => {
-    console.log('HANDLE SEARCH');
     let variables: Partial<FormInput> = {};
     const url_query = Object.keys(Router.query).length;
     if (url_query) {
@@ -144,14 +144,26 @@ const Search: NextPage = () => {
           <Inputs formData={formData} setFormData={setFormData} />
         </div>
 
-        <ActionIcon
-          onClick={() => handleSearch()}
-          size={32}
-          radius="xl"
-          variant="filled"
-        >
-          <BsArrowRight size={18} />
-        </ActionIcon>
+        <div>
+          {/* <ActionIcon
+            onClick={() => handleSearch()}
+            size={32}
+            radius="xl"
+            variant="filled"
+          >
+            <BsArrowRight size={18} />
+          </ActionIcon> */}
+
+          <Button
+            onClick={() => handleSearch()}
+            color="violet"
+            variant="filled"
+            size="sm"
+            // rightIcon={<BsArrowRight size={18} />}
+          >
+            Search
+          </Button>
+        </div>
       </form>
       <CardWrapper animes={searchedAnimes} />
     </>

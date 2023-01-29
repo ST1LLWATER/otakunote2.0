@@ -13,7 +13,7 @@ import { AnimeInterface } from '../interfaces/AnimeInterface';
 import { getCalendar } from '../functions/dataFetcherFunctions';
 import { currentCalendarAtom } from '../store';
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme, params, getRef) => ({
   wrapper: {
     padding: '0 100px',
     margin: '50px 0',
@@ -26,6 +26,37 @@ const useStyles = createStyles((theme) => ({
       padding: '0 15px',
     },
   },
+
+  controls: {
+    ref: getRef('controls'),
+    transition: 'opacity 150ms ease',
+    opacity: 1,
+
+    [theme.fn.smallerThan('sm')]: {
+      opacity: 0,
+    },
+  },
+
+  root: {
+    borderRadius: '8px',
+    overflow: 'hidden',
+    // '&:hover': {
+    //   [`& .${getRef('controls')}`]: {
+    //     opacity: 1,
+    //   },
+    // },
+  },
+
+  indicator: {
+    width: 50,
+    height: 4,
+    transition: 'width 250ms ease',
+
+    '&[data-active]': {
+      width: 80,
+    },
+  },
+
   slide: {
     '&::after': {
       content: `''`,
@@ -43,6 +74,27 @@ const useStyles = createStyles((theme) => ({
     width: '100%',
     height: '100%',
     objectFit: 'cover',
+  },
+
+  metadata_item_parent: {
+    position: 'absolute',
+    color: 'white',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 3,
+    lineHeight: '1.25rem',
+    fontSize: '1.2rem',
+    bottom: 30,
+    left: 55,
+    zIndex: 1,
+    textShadow: `1px 1px 2px rgba(0,0,0,0.5)`,
+    // WebkitTextStroke: '1px white',
+    mixBlendMode: 'normal',
+
+    [theme.fn.smallerThan('sm')]: {
+      bottom: 30,
+      left: 25,
+    },
   },
 
   metadata_item: {
@@ -94,7 +146,7 @@ const slides = [
 
 const Home = () => {
   const TRANSITION_DURATION = 2000;
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
   const [embla, setEmbla] = useState<Embla | null>(null);
   const [ongoing, setOngoing] = useAtom(currentCalendarAtom);
 
@@ -110,20 +162,11 @@ const Home = () => {
       <div className={classes.wrapper}>
         <Carousel
           getEmblaApi={setEmbla}
-          styles={{
-            root: {
-              borderRadius: '8px',
-              overflow: 'hidden',
-            },
-            indicator: {
-              width: 50,
-              height: 4,
-              transition: 'width 250ms ease',
-
-              '&[data-active]': {
-                width: 80,
-              },
-            },
+          // styles={{}}
+          classNames={{
+            root: classes.root,
+            controls: classes.controls,
+            indicator: classes.indicator,
           }}
           mx="auto"
           withIndicators
@@ -141,23 +184,7 @@ const Home = () => {
                 }}
               >
                 <img src={slide.image} className={classes.slide_image} alt="" />
-                <div
-                  style={{
-                    position: 'absolute',
-                    color: 'white',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 3,
-                    lineHeight: '1.25rem',
-                    fontSize: '1.2rem',
-                    bottom: 30,
-                    left: 80,
-                    zIndex: 1,
-                    textShadow: `1px 1px 2px rgba(0,0,0,0.5)`,
-                    // WebkitTextStroke: '1px white',
-                    mixBlendMode: 'normal',
-                  }}
-                >
+                <div className={classes.metadata_item_parent}>
                   <div
                     className={classes.metadata_item}
                     // style={{

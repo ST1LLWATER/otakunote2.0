@@ -65,12 +65,12 @@ const useStyles = createStyles((theme) => ({
       width: '100%',
       display: 'flex',
 
-      '&:nth-of-child(2)': {
+      '&:nth-child(2)': {
         justifyContent: 'center',
         backgrounColor: 'green',
       },
 
-      '&:nth-of-child(3)': {
+      '&:nth-child(3)': {
         justifyContent: 'flex-end',
       },
     },
