@@ -37,7 +37,7 @@
 
 .metadata_item {
   display: flex;
-  background: rgba(112, 108, 108, 0.644);
+  background: rgba(112, 108, 108, 0.7);
   align-items: center;
   justify-content: center;
   gap: 4px;

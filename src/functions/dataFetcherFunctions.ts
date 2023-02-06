@@ -7,6 +7,7 @@ import { ConstantData } from '../constants/filter_data';
 
 export const getWatchlist = async () => {
   const { data } = trpc.useQuery(['watchlist.get-media-by-userid']);
+
   if (!data) return null;
   const variables = {
     id_in: data.watchlist,
@@ -34,6 +35,8 @@ export const getCalendar = async ({ setOngoing }: any) => {
     variables,
     requestHeaders
   );
+
+  console.log(data.Page.media);
 
   setOngoing(data.Page.media);
 };

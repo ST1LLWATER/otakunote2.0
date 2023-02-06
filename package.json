@@ -29,10 +29,10 @@
     "jotai": "^1.8.3",
     "next": "12.2.5",
     "next-auth": "^4.18.8",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "17.0.0",
+    "react-dom": "17.0.0",
     "react-hot-toast": "^2.4.0",
-    "react-icons": "^4.4.0",
+    "react-icons": "^4.7.1",
     "react-query": "^3.39.2",
     "react-truncate": "^2.4.0",
     "superjson": "^1.9.1",
@@ -50,7 +50,7 @@
     "eslint-config-next": "12.2.5",
     "husky": "^8.0.1",
     "prettier": "^2.7.1",
-    "prisma": "^3.15.2",
+    "prisma": "^4.9.0",
     "typescript": "4.7.4"
   },
   "ct3aMetadata": {

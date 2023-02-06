@@ -78,6 +78,7 @@ const useStyles = createStyles((theme, params, getRef) => ({
 
   metadata_item_parent: {
     position: 'absolute',
+    paddingRight: '10px',
     color: 'white',
     display: 'flex',
     flexDirection: 'column',

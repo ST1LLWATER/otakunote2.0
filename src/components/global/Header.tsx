@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Logo from '/public/logo.svg';
 import {
   createStyles,
   Header,
@@ -186,7 +187,7 @@ export function HeaderResponsive({ links }: HeaderResponsiveProps) {
     <Header height={HEADER_HEIGHT} className={classes.root}>
       <div className={classes.header}>
         <div>
-          <MdOutlineMovieFilter size={30} color="#6942BB" />
+          <img src={Logo.src} />
         </div>
         <div>
           <Group spacing={5} className={classes.links}>

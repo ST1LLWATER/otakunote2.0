@@ -1,4 +1,4 @@
-import React, { useRef, MouseEvent, useState, useEffect } from 'react';
+import React, { MouseEvent, useState, useEffect } from 'react';
 import Truncate from 'react-truncate';
 import styles from '../../styles/card.module.css';
 import { RiStarSFill } from 'react-icons/ri';
@@ -9,6 +9,7 @@ import { WATCHLIST_BUTTON, REMOVE_BUTTON } from '../ActionButtons';
 import { useAtom } from 'jotai';
 import { selectedAnimeAtom } from '../../store';
 import { ConstantData } from '../../constants/filter_data';
+import Draggable from '../Draggable';
 
 // const [description, setDescription] = useState(props.description);
 
@@ -19,32 +20,9 @@ interface AnimeCard {
 }
 
 const Card = ({ anime, watchlisted, isLoggedIn }: AnimeCard) => {
-  const slider = useRef<HTMLDivElement>(null);
   const [isModalOpen, setIsModalOpen] = useAtom(ModalState);
-  const [selectedAnime, setSelectedAnime] = useAtom(selectedAnimeAtom);
+  const [, setSelectedAnime] = useAtom(selectedAnimeAtom);
   const [isHovered, setIsHovered] = useState<string>('translateY(54px)');
-
-  let mouseDown = false;
-  let startX: number, scrollLeft: number;
-
-  const startDragging = function (e: MouseEvent<HTMLDivElement>) {
-    mouseDown = true;
-    console.log(slider.current);
-    startX = e.pageX - slider.current!.offsetLeft;
-    scrollLeft = slider.current!.scrollLeft;
-  };
-  const stopDragging = () => {
-    mouseDown = false;
-  };
-
-  function mouseMoveEvent(e: MouseEvent<HTMLDivElement>) {
-    if (!mouseDown) {
-      return;
-    }
-    const x = e.pageX - slider.current!.offsetLeft;
-    const scroll = x - startX;
-    slider.current!.scrollLeft = scrollLeft - scroll;
-  }
 
   function onHover() {
     setIsHovered('translateY(0px)');
@@ -70,13 +48,16 @@ const Card = ({ anime, watchlisted, isLoggedIn }: AnimeCard) => {
       <div
         onMouseOver={onHover}
         onMouseLeave={exitHover}
-        // onMouseEnter={onHover}
-        // onMouseLeave={exitHover}
-        style={{
-          background: `url(${anime.coverImage.extraLarge}) no-repeat center center/cover`,
-        }}
+        data-value={anime.coverImage.extraLarge}
         className={styles.card_parent}
       >
+        <img
+          src={anime.coverImage.extraLarge}
+          alt="cover-image"
+          loading="lazy"
+          className={styles.cover_image}
+        />
+
         <div className={styles.overlay}></div>
         {anime.isAdult && (
           <Badge className={styles.nsfw_badge} size="sm">
@@ -92,46 +73,48 @@ const Card = ({ anime, watchlisted, isLoggedIn }: AnimeCard) => {
           }}
           className={`${styles.card_content}`}
         >
-          <div
-            ref={slider}
-            onMouseDown={startDragging}
-            onMouseUp={stopDragging}
-            onMouseLeave={stopDragging}
-            onMouseMove={mouseMoveEvent}
-            className={styles.genre_parent}
-          >
-            {anime.genres.map((item, index) => {
-              return (
-                <p className={styles.genre_items} key={index}>
-                  {item}
-                </p>
-              );
-            })}
-          </div>
+          <Draggable className={styles.genre_parent}>
+            <>
+              {anime.genres.map((item: string, index: number) => {
+                return (
+                  <p key={index} className={styles.genre_items}>
+                    {item}
+                  </p>
+                );
+              })}
+            </>
+          </Draggable>
           <div className={styles.title}>
             <Truncate lines={2} ellipsis={<span>...</span>}>
               {anime.title.english ?? anime.title.romaji}
             </Truncate>
           </div>
-          <div className={styles.metadata}>
-            <div className={styles.metadata_item}>
-              <p>{anime?.averageScore / 10}</p>
-              <RiStarSFill />
-            </div>
-            {anime.episodes && (
+          <Draggable className={styles.metadata}>
+            <>
               <div className={styles.metadata_item}>
-                <p>EP</p> <p>{anime.episodes}</p>
+                <p>{anime?.averageScore / 10}</p>
+                <RiStarSFill />
               </div>
-            )}
-            {anime.startDate.year && (
-              <div className={styles.metadata_item}>
-                {anime.startDate.month && (
-                  <p>{ConstantData.Months[anime.startDate.month - 1]}</p>
-                )}
-                <p>{anime.startDate.year}</p>
-              </div>
-            )}
-          </div>
+              {anime.episodes && (
+                <div className={styles.metadata_item}>
+                  <p>EP</p>
+                  {anime.status == 'RELEASING' ? (
+                    <p>{anime.episodes}</p>
+                  ) : (
+                    <p>{`${anime.nextAiringEpisode?.episode}/${anime.episodes}`}</p>
+                  )}
+                </div>
+              )}
+              {anime.startDate.year && (
+                <div className={styles.metadata_item}>
+                  {anime.startDate.month && (
+                    <p>{ConstantData.Months[anime.startDate.month - 1]}</p>
+                  )}
+                  <p>{anime.startDate.year}</p>
+                </div>
+              )}
+            </>
+          </Draggable>
           <div className={styles.actions}>
             {watchlisted ? (
               <REMOVE_BUTTON />
