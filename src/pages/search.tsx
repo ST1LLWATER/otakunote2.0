@@ -31,6 +31,8 @@ const useStyles = createStyles((theme) => ({
   },
 
   inputs: {
+    position: 'relative',
+    zIndex: 2,
     flex: 1,
   },
 }));
@@ -63,63 +65,54 @@ const Search: NextPage = () => {
   const [loading, setLoading] = useAtom(loadingAtom);
   const { classes, cx } = useStyles();
 
-  // const client = new GraphQLClient(ENDPOINT, {
-  //   method: 'POST',
-  //   jsonSerializer: {
-  //     parse: JSON.parse,
-  //     stringify: JSON.stringify,
-  //   },
-  // });
-
   useEffect(() => {
-    handleSearch();
+    const url_query_length = Object.keys(Router.query).length;
+    if (!url_query_length) return;
+    const variables: Partial<FormInput> = {
+      search_query: Router.query.search_query as string,
+      type: Router.query.type as string,
+      sort: Router.query.sort as string,
+    };
+    getData(variables);
+    setFormData({
+      search_query: Router.query.search_query as string,
+      type: Router.query.type as string,
+      sort: Router.query.sort as string,
+    });
   }, []);
 
-  // const api_query = SEARCH_QUERY;
+  const handleSearch = async () => {
+    if (
+      formData.search_query === '' ||
+      formData.type === '' ||
+      formData.sort === ''
+    )
+      return toast.error('Please search something');
 
-  // const requestHeaders = {
-  //   'Content-Type': 'application/json',
-  //   Accept: 'application/json',
-  // };
-
-  const handleSearch: () => void = async () => {
-    let variables: Partial<FormInput> = {};
-    const url_query = Object.keys(Router.query).length;
-    if (url_query) {
-      if (formData.search_query) {
-        variables = Router.query;
-        if (JSON.stringify(variables) === JSON.stringify(formData)) {
-          return;
-        } else {
-          variables = {
-            type: formData.type,
-            search_query: formData.search_query,
-            sort: formData.sort,
-          };
-        }
-      }
-    } else {
-      variables = {
-        type: formData.type,
-        search_query: formData.search_query,
-        sort: formData.sort,
-      };
+    let variables: Partial<FormInput> = {
+      search_query: Router.query.search_query as string,
+      type: Router.query.type as string,
+      sort: Router.query.sort as string,
+    };
+    if (JSON.stringify(variables) === JSON.stringify(formData)) {
+      return;
     }
+
+    variables = {
+      search_query: formData.search_query,
+      type: formData.type,
+      sort: formData.sort,
+    };
 
     Router.push({
       pathname: '/search',
       query: variables,
     });
 
-    if (!url_query) return;
+    getData(variables);
+  };
 
-    if (variables.type === 'All') {
-      variables = {
-        search_query: variables.search_query,
-        sort: variables.sort,
-      };
-    }
-
+  const getData = async (variables: any) => {
     try {
       const data = await client.request<APIInterface>(
         SEARCH_QUERY,
@@ -132,6 +125,57 @@ const Search: NextPage = () => {
       toast.error('Failed to fetch results');
     }
   };
+
+  // const handleSearch: () => void = async () => {
+  //   let variables: Partial<FormInput> = {};
+  //   const url_query = Object.keys(Router.query).length;
+  //   if (url_query) {
+  //     if (formData.search_query) {
+  //       variables = Router.query;
+  //       if (JSON.stringify(variables) === JSON.stringify(formData)) {
+  //         return;
+  //       } else {
+  //         variables = {
+  //           type: formData.type,
+  //           search_query: formData.search_query,
+  //           sort: formData.sort,
+  //         };
+  //       }
+  //     }
+  //   } else {
+  //     variables = {
+  //       type: formData.type,
+  //       search_query: formData.search_query,
+  //       sort: formData.sort,
+  //     };
+  //   }
+
+  //   Router.push({
+  //     pathname: '/search',
+  //     query: variables,
+  //   });
+
+  //   if (!url_query) return;
+
+  //   if (variables.type === 'All') {
+  //     variables = {
+  //       search_query: variables.search_query,
+  //       sort: variables.sort,
+  //     };
+  //   }
+
+  //   try {
+  //     const data = await client.request<APIInterface>(
+  //       SEARCH_QUERY,
+  //       variables,
+  //       requestHeaders
+  //     );
+  //     setSearchedAnimes(data.Page.media);
+  //   } catch (err) {
+  //     console.log(err);
+  //     toast.error('Failed to fetch results');
+  //   }
+  // };
 
   if (loading) {
     return <>Loading</>;
