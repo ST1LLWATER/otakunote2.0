@@ -52,7 +52,7 @@ const Card = ({ anime, watchlisted, isLoggedIn }: AnimeCard) => {
         className={styles.card_parent}
       >
         <img
-          src={anime.coverImage.extraLarge}
+          src={anime.coverImage.large}
           alt="cover-image"
           loading="lazy"
           className={styles.cover_image}
