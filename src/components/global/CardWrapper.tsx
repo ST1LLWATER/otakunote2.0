@@ -2,7 +2,9 @@ import React from 'react';
 import Card from '../data/Card';
 import { createStyles } from '@mantine/core';
 import { useUser } from '../../hooks/useUser';
-import { AnimeInterface } from '../../interfaces/AnimeInterface';
+import { CardInterface } from '../../interfaces/CardInterface';
+import { watchlistedIdsAtom } from '../../store';
+import { useAtom } from 'jotai';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -31,11 +33,12 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface CardWrapperProps {
-  animes: AnimeInterface[] | null;
+  animes: CardInterface[] | null;
 }
 
 const CardWrapper = (props: CardWrapperProps) => {
   const { classes, cx } = useStyles();
+  const [watchlistedIds, setWatchlistedIds] = useAtom(watchlistedIdsAtom);
   const isLoggedIn = useUser();
   return (
     <>
@@ -45,7 +48,7 @@ const CardWrapper = (props: CardWrapperProps) => {
             key={anime.id}
             isLoggedIn={isLoggedIn}
             anime={anime}
-            watchlisted={false}
+            watchlisted={watchlistedIds?.includes(anime.id) ? true : false}
           />
         ))}
       </div>

@@ -1,4 +1,4 @@
-export interface AnimeInterface {
+export interface CardInterface {
   id: number;
   type: CardType;
   isAdult: boolean;
@@ -10,14 +10,12 @@ export interface AnimeInterface {
     extraLarge: string;
     large: string;
   };
-  bannerImage: string;
   startDate: {
     year: number;
     month: number;
     day: number;
   };
   status: string;
-  description: string;
   episodes: number;
   genres: string[];
   averageScore: number;

@@ -4,11 +4,13 @@ import { FaRegTrashAlt } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 // import { addAnimeToWatchlist } from '../../functions/miscFunctions';
 import { trpc } from '../utils/trpc';
+import { addAnimeToWatchlist } from '../functions/miscFunctions';
 
 export type WatchListPayload = {
   isLoggedIn: boolean;
   mediaId: number;
   mediaType: 'ANIME' | 'MANGA';
+  mutation?: any;
 };
 
 export const WATCHLIST_BUTTON = ({
@@ -17,34 +19,6 @@ export const WATCHLIST_BUTTON = ({
   mediaType,
 }: WatchListPayload) => {
   const mutation = trpc.useMutation('watchlist.add-media');
-  async function addAnimeToWatchlist({
-    mediaId,
-    mediaType,
-    isLoggedIn,
-  }: WatchListPayload) {
-    if (!isLoggedIn) {
-      toast.error('Please Login to Add to Watchlist');
-      return;
-    }
-    toast.loading('Adding to watchlist...');
-    if (!mediaId || !mediaType) return;
-    mutation.mutate(
-      {
-        mediaId: mediaId,
-        mediaType: mediaType,
-      },
-      {
-        onSuccess: () => {
-          toast.dismiss();
-          toast.success('Added to Watchlist!');
-        },
-        onError: () => {
-          toast.dismiss();
-          toast.error('Failed to add to watchlist');
-        },
-      }
-    );
-  }
 
   return (
     <Button
@@ -62,14 +36,13 @@ export const WATCHLIST_BUTTON = ({
           outline: 0,
         },
       })}
-      onClick={async () =>
-        isLoggedIn
-          ? await addAnimeToWatchlist({
-              mediaId,
-              mediaType,
-              isLoggedIn,
-            })
-          : toast.error('Please Login to Add to Watchlist')
+      onClick={() =>
+        addAnimeToWatchlist({
+          mediaId,
+          mediaType,
+          isLoggedIn,
+          mutation,
+        })
       }
       variant="filled"
       size="sm"
@@ -81,7 +54,7 @@ export const WATCHLIST_BUTTON = ({
   );
 };
 
-export const REMOVE_BUTTON = () => (
+export const REMOVE_BUTTON = ({ mediaId }: { mediaId: number }) => (
   <Button
     styles={(theme) => ({
       root: {

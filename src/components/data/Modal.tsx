@@ -2,29 +2,39 @@ import React, { MouseEvent, useEffect, useState } from 'react';
 import styles from '../../styles/modal.module.css';
 import { RiStarSFill } from 'react-icons/ri';
 import { Modal } from '@mantine/core';
-import { AnimeInterface } from '../../interfaces/AnimeInterface';
-import { atom, useAtom } from 'jotai';
+import { ModalState } from '../../store';
+import { useAtom } from 'jotai';
 import { ConstantData } from '../../constants/filter_data';
+import { getModalData } from '../../functions/dataFetcherFunctions';
+import { useSession } from 'next-auth/react';
+import { ModalData } from '../../interfaces/ModalInterface';
+import Draggable from '../Draggable';
 
-export const ModalState = atom<boolean>(false);
-
-interface InfoModal {
-  anime: AnimeInterface;
+interface IModal {
+  id: number;
   watchlisted: boolean;
 }
 
-const InfoModal = ({ anime, watchlisted }: InfoModal) => {
+const InfoModal = ({ id, watchlisted }: IModal) => {
   const [isModalOpen, setIsModalOpen] = useAtom(ModalState);
+  const [data, setData] = useState<ModalData | null>(null);
   const [watchedEpisodes, setWatchedEpisodes] = useState<number>(0);
+  const { data: session } = useSession();
 
   useEffect(() => {
-    console.log(watchedEpisodes);
-  }, [watchedEpisodes]);
+    getModalData({ id }).then((data) => setData(data));
+
+    return () => {
+      setData(null);
+    };
+  }, [id]);
 
   return (
     <>
       <Modal
-        onClose={() => setIsModalOpen(false)}
+        onClose={() => {
+          setIsModalOpen(false);
+        }}
         opened={isModalOpen}
         withCloseButton={false}
         closeOnClickOutside={true}
@@ -38,9 +48,6 @@ const InfoModal = ({ anime, watchlisted }: InfoModal) => {
           },
 
           body: {
-            // padding: '0 15px',
-            // position: 'relative',
-
             '&::-webkit-scrollbar': {
               width: '0px',
             },
@@ -61,107 +68,133 @@ const InfoModal = ({ anime, watchlisted }: InfoModal) => {
         size="1000px"
         transition="scale"
       >
-        <div>
-          <div
-            style={{
-              position: 'relative',
-              zIndex: 0,
-              background: `url(${anime?.bannerImage})  center center/cover no-repeat`,
-            }}
-          >
+        {data ? (
+          <div>
             <div
-              className={styles.overlay}
               style={{
-                zIndex: 1,
-                display: anime.bannerImage ? '' : 'none',
-              }}
-            ></div>
-            {/* <img
-              src={anime?.bannerImage}
-              // src="https://s4.anilist.co/file/anilistcdn/media/anime/banner/127230-lf01ya5ny8aH.jpg"
-              // width={1000}
-              // height={250}
-              alt=""
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-              }}
-            /> */}
-            <div className={styles.metadata_parent}>
-              <div className={styles.metadata}>
-                <div className={styles.metadata_item}>
-                  <p>{anime?.averageScore / 10}</p>
-                  <RiStarSFill />
-                </div>
-                {anime.episodes && (
-                  <div className={styles.metadata_item}>
-                    <p>EP</p> <p>{anime.episodes}</p>
-                  </div>
-                )}
-                {anime.startDate.year && (
-                  <div className={styles.metadata_item}>
-                    {anime.startDate.month && (
-                      <p>{ConstantData.Months[anime.startDate.month - 1]}</p>
-                    )}
-                    <p>{anime.startDate.year}</p>
-                  </div>
-                )}
-              </div>
-              <div className={styles.title}>
-                <p>{anime.title.romaji ?? anime.title.english}</p>
-              </div>
-              {anime.title.romaji && (
-                <div className={styles.title_secondary}>
-                  <p>{anime.title.english}</p>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* </div> */}
-          <div className={styles.content}>
-            <div
-              className={styles.description}
-              dangerouslySetInnerHTML={{
-                __html: anime.description,
+                position: 'relative',
+                zIndex: 0,
+                background: `url(${data.bannerImage}) center center/cover no-repeat`,
               }}
             >
-              {/* {} */}
+              <div
+                className={styles.overlay}
+                style={{
+                  zIndex: 1,
+                  display: data.bannerImage ? '' : 'none',
+                }}
+              ></div>
+              <div className={styles.metadata_parent}>
+                <div className={styles.metadata}>
+                  <div className={styles.metadata_item}>
+                    <p>{data.averageScore / 10}</p>
+                    <RiStarSFill />
+                  </div>
+                  {data.episodes && (
+                    <div className={styles.metadata_item}>
+                      <p>EP</p> <p>{data.episodes}</p>
+                    </div>
+                  )}
+                  {data.startDate.year && (
+                    <div className={styles.metadata_item}>
+                      {data.startDate.month && (
+                        <p>{ConstantData.Months[data.startDate.month - 1]}</p>
+                      )}
+                      <p>{data.startDate.year}</p>
+                    </div>
+                  )}
+                </div>
+                <div className={styles.title}>
+                  <p>{data.title.romaji ?? data.title.english}</p>
+                </div>
+                {data.title.romaji && (
+                  <div className={styles.title_secondary}>
+                    <p>{data.title.english}</p>
+                  </div>
+                )}
+              </div>
             </div>
-            <div className={styles.episode_list}>
-              {[...Array(anime?.episodes)].map((_, idx) => (
+
+            <div className={styles.content}>
+              <div
+                className={styles.description}
+                dangerouslySetInnerHTML={{
+                  __html: data.description,
+                }}
+              ></div>
+              {!!session && watchlisted && (
+                <div className={styles.episode_list}>
+                  {[...Array(data.episodes)].map((_, idx) => (
+                    <div
+                      key={idx}
+                      onClick={(e: MouseEvent<HTMLDivElement>) => {
+                        if (e.target instanceof HTMLElement) {
+                          if (parseInt(e.target.innerText) == watchedEpisodes) {
+                            setWatchedEpisodes((prev) => prev - 1);
+                            return;
+                          }
+                          setWatchedEpisodes(parseInt(e.target.innerText));
+                        }
+                      }}
+                      style={{
+                        border: '1px solid black',
+                        padding: '5px 10px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        userSelect: 'none',
+                        background: idx < watchedEpisodes ? 'gray' : 'none',
+                      }}
+                    >
+                      {idx + 1}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <div>
                 <div
-                  key={idx}
-                  onClick={(e: MouseEvent<HTMLDivElement>) => {
-                    if (e.target instanceof HTMLElement) {
-                      if (parseInt(e.target.innerText) == watchedEpisodes) {
-                        setWatchedEpisodes((prev) => prev - 1);
-                        return;
-                      }
-                      setWatchedEpisodes(parseInt(e.target.innerText));
-                    }
-                  }}
                   style={{
-                    border: '1px solid black',
-                    padding: '5px 10px',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    userSelect: 'none',
-                    background: idx < watchedEpisodes ? 'gray' : 'none',
+                    fontSize: '1.2rem',
+                    fontWeight: 'semibold',
                   }}
                 >
-                  {idx + 1}
+                  Characters:
                 </div>
-              ))}
+                <Draggable className={styles.characters}>
+                  <>
+                    {data.characterPreview.edges.map((character, index) => {
+                      return (
+                        <div key={index} className={styles.character}>
+                          <img
+                            loading="lazy"
+                            className={styles.character_image}
+                            src={character.node.image.medium}
+                            alt={character.node.name.full}
+                          />
+                          <div className={styles.character_data}>
+                            <div className={styles.character_name}>
+                              {character.node.name.full}
+                            </div>
+                            <div className={styles.character_role}>
+                              {character.role}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </>
+                </Draggable>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div>Loading..</div>
+        )}
       </Modal>
     </>
   );
 };
 
-export default InfoModal;
+export default React.memo(InfoModal);

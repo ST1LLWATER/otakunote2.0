@@ -16,6 +16,9 @@ import { signIn, useSession, signOut } from 'next-auth/react';
 import { MdOutlineMovieFilter } from 'react-icons/md';
 import { BsChevronDown } from 'react-icons/bs';
 import Link from 'next/link';
+import { useAtom } from 'jotai';
+import { watchlistedIdsAtom } from '../../store';
+import { trpc } from '../../utils/trpc';
 
 const HEADER_HEIGHT = 60;
 
@@ -130,12 +133,6 @@ const useStyles = createStyles((theme) => ({
 
   linkActive: {
     '&, &:hover': {
-      // backgroundColor: theme.fn.variant({
-      //   variant: 'light',
-      //   color: theme.primaryColor,
-      // }).background,
-      // color: theme.fn.variant({ variant: 'light', color: theme.primaryColor })
-      //   .color,
       backgroundColor: 'rgba(105, 66, 187,0.5)',
       color: 'white',
     },
@@ -154,14 +151,18 @@ interface HeaderResponsiveProps {
 }
 
 export function HeaderResponsive({ links }: HeaderResponsiveProps) {
+  const { data: session } = useSession();
+  const [watchlistedIds, setWatchlistedIds] = useAtom(watchlistedIdsAtom);
+  const { data } = trpc.useQuery(['watchlist.get-media-by-userid'], {
+    enabled: watchlistedIds ? false : true && session !== null,
+    onSuccess: (data) => {
+      setWatchlistedIds(data.watchlist);
+    },
+  });
   const [opened, { toggle, close }] = useDisclosure(false);
   const [active, setActive] = useState<null | string>(null);
   const { classes, cx } = useStyles();
   const Router = useRouter();
-
-  const { data: session } = useSession();
-
-  console.log('rerender');
 
   useEffect(() => {
     setActive(Router.pathname);

@@ -1,16 +1,18 @@
 import { atom } from 'jotai';
-import { AnimeInterface } from '../interfaces/AnimeInterface';
+import { CardInterface } from '../interfaces/CardInterface';
 
 interface SelectedAnime {
-  anime: AnimeInterface;
+  id: number;
   watchlisted: boolean;
 }
 
-export const watchlistedIdsAtom = atom<number[]>([]);
+export const watchlistedIdsAtom = atom<number[] | null>(null);
 
-export const watchlistedAnimesAtom = atom<AnimeInterface[] | null>(null);
+export const watchlistedAnimesAtom = atom<CardInterface[] | null>(null);
 
-export const currentCalendarAtom = atom<AnimeInterface[] | null>(null);
+export const currentCalendarAtom = atom<CardInterface[] | null>(null);
+
+export const ModalState = atom<boolean>(false);
 
 export const selectedAnimeAtom = atom<SelectedAnime | null>(null);
 

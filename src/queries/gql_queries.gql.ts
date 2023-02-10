@@ -42,16 +42,13 @@ export const SEARCH_QUERY = gql`
         }
         coverImage {
           extraLarge
-          large
         }
-        bannerImage
         startDate {
           year
           month
           day
         }
         status
-        description
         episodes
         genres
         averageScore
@@ -65,8 +62,53 @@ export const SEARCH_QUERY = gql`
   }
 `;
 
+export const MODAL_QUERY = gql`
+  query ($id: Int) {
+    Media(id: $id) {
+      title {
+        english
+        romaji
+      }
+      startDate {
+        year
+        month
+      }
+      trailer {
+        id
+        site
+        thumbnail
+      }
+      characterPreview: characters(sort: [ROLE, RELEVANCE, ID]) {
+        edges {
+          role
+          name
+          node {
+            id
+            name {
+              full
+            }
+            image {
+              medium
+            }
+          }
+        }
+      }
+      status
+      description
+      episodes
+      bannerImage
+      averageScore
+      nextAiringEpisode {
+        airingAt
+        timeUntilAiring
+        episode
+      }
+    }
+  }
+`;
+
 export const RECOMMENDATION_QUERY = gql`
-  query ($page: Int = 1) {
+  query ($page: Int = 1, $mediaId: Int) {
     GenreCollection
     Page(page: $page, perPage: 50) {
       pageInfo {
@@ -76,13 +118,11 @@ export const RECOMMENDATION_QUERY = gql`
         lastPage
         hasNextPage
       }
-      recommendations(sort: RATING_DESC, mediaId: 20698) {
+      recommendations(sort: RATING_DESC, mediaId: $mediaId) {
         mediaRecommendation {
           title {
             romaji
             english
-            native
-            userPreferred
           }
           description
         }
@@ -90,3 +130,30 @@ export const RECOMMENDATION_QUERY = gql`
     }
   }
 `;
+
+export interface SearchData {
+  id: number;
+  type: string;
+  isAdult: boolean;
+  title: {
+    english: string;
+    romaji: string;
+  };
+  coverImage: {
+    extraLarge: string;
+  };
+  startDate: {
+    year: number;
+    month: number;
+    day: number;
+  };
+  status: string;
+  episodes?: number;
+  genres: string[];
+  averageScore: number;
+  nextAiringEpisode: {
+    airingAt: number;
+    timeUntilAiring: number;
+    episode: number;
+  };
+}

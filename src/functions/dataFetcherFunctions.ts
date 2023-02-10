@@ -1,16 +1,19 @@
 import { APIInterface } from '../interfaces/APIInterface';
 import { client } from '../constants/api';
 import { requestHeaders } from '../constants/api';
-import { SEARCH_QUERY } from '../queries/gql_queries.gql';
-import { trpc } from '../utils/trpc';
+import { SEARCH_QUERY, MODAL_QUERY } from '../queries/gql_queries.gql';
 import { ConstantData } from '../constants/filter_data';
 
-export const getWatchlist = async () => {
-  const { data } = trpc.useQuery(['watchlist.get-media-by-userid']);
-
-  if (!data) return null;
+export const getWatchlist = async ({
+  watchlistedIds,
+  setWatchlistedAnimes,
+}: {
+  watchlistedIds: number[] | null;
+  setWatchlistedAnimes: any;
+}) => {
+  if (watchlistedIds == null || watchlistedIds.length == 0) return null;
   const variables = {
-    id_in: data.watchlist,
+    id_in: watchlistedIds,
   };
   const res = await client.request<APIInterface>(
     SEARCH_QUERY,
@@ -18,7 +21,17 @@ export const getWatchlist = async () => {
     requestHeaders
   );
 
-  return res.Page.media;
+  setWatchlistedAnimes(res.Page.media);
+};
+
+export const getModalData = async ({ id }: { id: number }) => {
+  const variables = {
+    id: id,
+  };
+
+  const res = await client.request(MODAL_QUERY, variables, requestHeaders);
+
+  return res.Media;
 };
 
 export const getCalendar = async ({ setOngoing }: any) => {
@@ -35,8 +48,6 @@ export const getCalendar = async ({ setOngoing }: any) => {
     variables,
     requestHeaders
   );
-
-  console.log(data.Page.media);
 
   setOngoing(data.Page.media);
 };

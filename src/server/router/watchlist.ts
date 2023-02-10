@@ -47,16 +47,13 @@ export const watchlistRouter = createRouter()
   .query('get-media-by-userid', {
     input: z
       .object({
-        userId: z.string(),
+        userId: z.string().optional(),
       })
       .optional(),
     async resolve({ ctx, input }) {
       const userId = input?.userId ?? ctx.session?.user?.id;
       if (!userId) {
-        return {
-          success: false,
-          message: 'Invalid User ID',
-        };
+        throw new Error('Not logged in');
       } else {
         const watchlist = await ctx.prisma.watchlist.findMany({
           where: {
@@ -68,6 +65,8 @@ export const watchlistRouter = createRouter()
         });
 
         const mediaIds = watchlist.map((media) => media.mediaId);
+
+        console.log(mediaIds);
         return {
           success: true,
           message: 'Watchlist retrieved',

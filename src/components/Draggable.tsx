@@ -13,7 +13,6 @@ const Draggable = ({ className, children }: IDraggable) => {
 
   const startDragging = function (e: MouseEvent<HTMLDivElement>) {
     mouseDown = true;
-    console.log(slider.current);
     startX = e.pageX - slider.current!.offsetLeft;
     scrollLeft = slider.current!.scrollLeft;
   };

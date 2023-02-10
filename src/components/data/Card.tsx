@@ -3,18 +3,19 @@ import Truncate from 'react-truncate';
 import styles from '../../styles/card.module.css';
 import { RiStarSFill } from 'react-icons/ri';
 import { Badge, Button } from '@mantine/core';
-import { AnimeInterface } from '../../interfaces/AnimeInterface';
-import { ModalState } from './Modal';
+import { CardInterface } from '../../interfaces/CardInterface';
+import { ModalState } from '../../store';
 import { WATCHLIST_BUTTON, REMOVE_BUTTON } from '../ActionButtons';
 import { useAtom } from 'jotai';
 import { selectedAnimeAtom } from '../../store';
 import { ConstantData } from '../../constants/filter_data';
 import Draggable from '../Draggable';
+import { trpc } from '../../utils/trpc';
 
 // const [description, setDescription] = useState(props.description);
 
 interface AnimeCard {
-  anime: AnimeInterface;
+  anime: CardInterface;
   watchlisted: boolean;
   isLoggedIn: boolean;
 }
@@ -48,11 +49,10 @@ const Card = ({ anime, watchlisted, isLoggedIn }: AnimeCard) => {
       <div
         onMouseOver={onHover}
         onMouseLeave={exitHover}
-        data-value={anime.coverImage.extraLarge}
         className={styles.card_parent}
       >
         <img
-          src={anime.coverImage.large}
+          src={anime.coverImage.extraLarge}
           alt="cover-image"
           loading="lazy"
           className={styles.cover_image}
@@ -98,7 +98,7 @@ const Card = ({ anime, watchlisted, isLoggedIn }: AnimeCard) => {
               {anime.episodes && (
                 <div className={styles.metadata_item}>
                   <p>EP</p>
-                  {anime.status == 'RELEASING' ? (
+                  {anime.status != 'RELEASING' ? (
                     <p>{anime.episodes}</p>
                   ) : (
                     <p>{`${anime.nextAiringEpisode?.episode}/${anime.episodes}`}</p>
@@ -117,7 +117,7 @@ const Card = ({ anime, watchlisted, isLoggedIn }: AnimeCard) => {
           </Draggable>
           <div className={styles.actions}>
             {watchlisted ? (
-              <REMOVE_BUTTON />
+              <REMOVE_BUTTON mediaId={anime.id} />
             ) : (
               <WATCHLIST_BUTTON
                 mediaId={anime.id}
@@ -145,7 +145,7 @@ const Card = ({ anime, watchlisted, isLoggedIn }: AnimeCard) => {
               className={styles.action_button}
               onClick={(e: MouseEvent<HTMLButtonElement>) => {
                 // e.preventDefault();
-                setSelectedAnime({ anime, watchlisted });
+                setSelectedAnime({ id: anime.id, watchlisted });
                 setIsModalOpen(true);
               }}
               variant="outline"

@@ -9,14 +9,14 @@ import { ConstantData } from '../constants/filter_data';
 import { useAtom } from 'jotai';
 import { WATCHLIST_BUTTON } from '../components/ActionButtons';
 import { RiStarSFill } from 'react-icons/ri';
-import { AnimeInterface } from '../interfaces/AnimeInterface';
+import { CardInterface } from '../interfaces/CardInterface';
 import { getCalendar } from '../functions/dataFetcherFunctions';
 import { currentCalendarAtom } from '../store';
 
 const useStyles = createStyles((theme, params, getRef) => ({
   wrapper: {
-    padding: '0 100px',
-    margin: '50px 0',
+    // padding: '0 100px',
+    // margin: '50px 100px',
     display: 'flex',
     flexDirection: 'column',
     gap: 20,
@@ -232,15 +232,20 @@ const Home = () => {
             </Carousel.Slide>
           ))}
         </Carousel>
-        <div
-          style={{
-            fontSize: '2rem',
-          }}
-        >
-          Current Calendar
-        </div>
         <div>
-          <CardWrapper animes={ongoing} />
+          <div
+            style={{
+              fontSize: '1.8rem',
+              fontWeight: 600,
+              marginBottom: '1rem',
+              borderBottom: '2px solid #e5e5e5',
+            }}
+          >
+            Current Calendar
+          </div>
+          <div>
+            <CardWrapper animes={ongoing} />
+          </div>
         </div>
       </div>
     </>

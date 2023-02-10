@@ -9,23 +9,22 @@ import Router from 'next/router';
 import { NextPage } from 'next';
 import { loadingAtom } from '../store';
 import { toast } from 'react-hot-toast';
-import { AnimeInterface } from '../interfaces/AnimeInterface';
-import { ActionIcon, Button, createStyles } from '@mantine/core';
-import { BsArrowRight } from 'react-icons/bs';
+import { CardInterface } from '../interfaces/CardInterface';
+import { Button, createStyles } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   formWrapper: {
     display: 'flex',
-    maxWidth: '70%',
+    // maxWidth: '90%',
     position: 'relative',
     zIndex: 2,
     justifyContent: 'center',
     alignItems: 'center',
     gap: '10px',
-    margin: '30px auto',
+    // margin: '30px auto',
 
     [theme.fn.smallerThan('md')]: {
-      maxWidth: '95%',
+      // maxWidth: '95%',
       flexDirection: 'column',
     },
   },
@@ -54,7 +53,7 @@ export type FormInput = {
 };
 
 const Search: NextPage = () => {
-  const [searchedAnimes, setSearchedAnimes] = useState<AnimeInterface[] | null>(
+  const [searchedAnimes, setSearchedAnimes] = useState<CardInterface[] | null>(
     null
   );
   const [formData, setFormData] = useState<FormInput>({
@@ -126,57 +125,6 @@ const Search: NextPage = () => {
     }
   };
 
-  // const handleSearch: () => void = async () => {
-  //   let variables: Partial<FormInput> = {};
-  //   const url_query = Object.keys(Router.query).length;
-  //   if (url_query) {
-  //     if (formData.search_query) {
-  //       variables = Router.query;
-  //       if (JSON.stringify(variables) === JSON.stringify(formData)) {
-  //         return;
-  //       } else {
-  //         variables = {
-  //           type: formData.type,
-  //           search_query: formData.search_query,
-  //           sort: formData.sort,
-  //         };
-  //       }
-  //     }
-  //   } else {
-  //     variables = {
-  //       type: formData.type,
-  //       search_query: formData.search_query,
-  //       sort: formData.sort,
-  //     };
-  //   }
-
-  //   Router.push({
-  //     pathname: '/search',
-  //     query: variables,
-  //   });
-
-  //   if (!url_query) return;
-
-  //   if (variables.type === 'All') {
-  //     variables = {
-  //       search_query: variables.search_query,
-  //       sort: variables.sort,
-  //     };
-  //   }
-
-  //   try {
-  //     const data = await client.request<APIInterface>(
-  //       SEARCH_QUERY,
-  //       variables,
-  //       requestHeaders
-  //     );
-  //     setSearchedAnimes(data.Page.media);
-  //   } catch (err) {
-  //     console.log(err);
-  //     toast.error('Failed to fetch results');
-  //   }
-  // };
-
   if (loading) {
     return <>Loading</>;
   }
@@ -189,21 +137,11 @@ const Search: NextPage = () => {
         </div>
 
         <div>
-          {/* <ActionIcon
-            onClick={() => handleSearch()}
-            size={32}
-            radius="xl"
-            variant="filled"
-          >
-            <BsArrowRight size={18} />
-          </ActionIcon> */}
-
           <Button
             onClick={() => handleSearch()}
             color="violet"
             variant="filled"
             size="sm"
-            // rightIcon={<BsArrowRight size={18} />}
           >
             Search
           </Button>

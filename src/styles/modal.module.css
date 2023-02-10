@@ -101,8 +101,69 @@
 
 .episode_list::-webkit-scrollbar-thumb {
   background-color: #b8b3b3;
-
   border-radius: 100px;
+}
+
+.characters {
+  display: flex;
+  margin-bottom: 16px;
+  gap: 20px;
+  width: 100%;
+  padding-bottom: 10px;
+  cursor: pointer;
+  overflow-x: auto;
+}
+
+.character {
+  white-space: nowrap;
+  user-select: none;
+  display: flex;
+  flex-shrink: 0;
+  border-radius: 8px;
+  padding: 4px 15px;
+  background-color: rgba(75, 68, 68, 0.7);
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  line-height: 24px;
+}
+
+.character_image {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.character_data {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.character_name {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fffbff;
+}
+
+.character_role {
+  font-size: 12px;
+  font-weight: 400;
+  color: #c0bac0;
+}
+
+.characters::-webkit-scrollbar {
+  height: 5px;
+}
+
+.characters::-webkit-scrollbar-track {
+  background-color: #302c2c;
+}
+
+.characters::-webkit-scrollbar-thumb {
+  background-color: #b8b3b3;
 }
 
 @media (max-width: 600px) {

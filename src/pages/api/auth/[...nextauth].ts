@@ -1,5 +1,4 @@
 import NextAuth, { type NextAuthOptions } from 'next-auth';
-import DiscordProvider from 'next-auth/providers/discord';
 import GoogleProvider from 'next-auth/providers/google';
 
 import { PrismaAdapter } from '@next-auth/prisma-adapter';

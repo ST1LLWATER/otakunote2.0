@@ -3,7 +3,7 @@ import { httpBatchLink } from '@trpc/client/links/httpBatchLink';
 import { loggerLink } from '@trpc/client/links/loggerLink';
 import { withTRPC } from '@trpc/next';
 import { SessionProvider } from 'next-auth/react';
-import { MantineProvider as ThemeProvider } from '@mantine/core';
+import { MantineProvider as ThemeProvider, createStyles } from '@mantine/core';
 import type { AppType } from 'next/dist/shared/lib/utils';
 import superjson from 'superjson';
 import type { AppRouter } from '../server/router';
@@ -16,11 +16,30 @@ import { useAtom } from 'jotai';
 import { Toaster } from 'react-hot-toast';
 import { selectedAnimeAtom } from '../store';
 
+const useStyles = createStyles((theme) => ({
+  pageContent: {
+    width: '100%',
+    flex: 1,
+    // margin: '0 auto 35px auto',
+    margin: '50px',
+    padding: '0 100px',
+
+    [theme.fn.smallerThan('lg')]: {
+      padding: '0 50px',
+    },
+
+    [theme.fn.smallerThan('sm')]: {
+      padding: '0',
+    },
+  },
+}));
+
 const MyApp: AppType = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
   const [selectedAnime, setSelectedAnime] = useAtom(selectedAnimeAtom);
+  const { classes, cx } = useStyles();
 
   return (
     <SessionProvider session={session}>
@@ -32,7 +51,7 @@ const MyApp: AppType = ({
         <Toaster />
         {selectedAnime && (
           <InfoModal
-            anime={selectedAnime.anime}
+            id={selectedAnime.id}
             watchlisted={selectedAnime?.watchlisted}
           />
         )}
@@ -55,13 +74,7 @@ const MyApp: AppType = ({
           >
             <HeaderResponsive links={Links.links} />
           </div>
-          <div
-            style={{
-              width: '100%',
-              flex: 1,
-              margin: '0 auto 35px auto',
-            }}
-          >
+          <div className={classes.pageContent}>
             <Component {...pageProps} />
           </div>
           <Footer />
