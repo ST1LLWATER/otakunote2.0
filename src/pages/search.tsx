@@ -3,11 +3,9 @@ import { client, requestHeaders } from '../constants/api';
 import { SEARCH_QUERY } from '../queries/gql_queries.gql';
 import Inputs from '../components/search/Inputs';
 import CardWrapper from '../components/global/CardWrapper';
-import { useAtom } from 'jotai';
 import { APIInterface } from '../interfaces/APIInterface';
 import Router from 'next/router';
 import { NextPage } from 'next';
-import { loadingAtom } from '../store';
 import { toast } from 'react-hot-toast';
 import { CardInterface } from '../interfaces/CardInterface';
 import { Button, createStyles } from '@mantine/core';
@@ -15,13 +13,14 @@ import { Button, createStyles } from '@mantine/core';
 const useStyles = createStyles((theme) => ({
   formWrapper: {
     display: 'flex',
+    padding: '0 10px',
     // maxWidth: '90%',
     position: 'relative',
     zIndex: 2,
     justifyContent: 'center',
     alignItems: 'center',
     gap: '10px',
-    // margin: '30px auto',
+    marginBottom: '30px',
 
     [theme.fn.smallerThan('md')]: {
       // maxWidth: '95%',
@@ -61,7 +60,6 @@ const Search: NextPage = () => {
     search_query: '',
     sort: '',
   });
-  const [loading, setLoading] = useAtom(loadingAtom);
   const { classes, cx } = useStyles();
 
   useEffect(() => {
@@ -103,6 +101,16 @@ const Search: NextPage = () => {
       sort: formData.sort,
     };
 
+    if (variables.type === 'All') {
+      delete variables.type;
+    }
+
+    if (variables.sort === '') {
+      variables.sort = 'POPULARITY_DESC';
+    }
+
+    console.log(variables);
+
     Router.push({
       pathname: '/search',
       query: variables,
@@ -124,10 +132,6 @@ const Search: NextPage = () => {
       toast.error('Failed to fetch results');
     }
   };
-
-  if (loading) {
-    return <>Loading</>;
-  }
 
   return (
     <>

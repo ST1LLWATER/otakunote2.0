@@ -153,40 +153,42 @@ const InfoModal = ({ id, watchlisted }: IModal) => {
                 </div>
               )}
 
-              <div>
-                <div
-                  style={{
-                    fontSize: '1.2rem',
-                    fontWeight: 'semibold',
-                  }}
-                >
-                  Characters:
-                </div>
-                <Draggable className={styles.characters}>
-                  <>
-                    {data.characterPreview.edges.map((character, index) => {
-                      return (
-                        <div key={index} className={styles.character}>
-                          <img
-                            loading="lazy"
-                            className={styles.character_image}
-                            src={character.node.image.medium}
-                            alt={character.node.name.full}
-                          />
-                          <div className={styles.character_data}>
-                            <div className={styles.character_name}>
-                              {character.node.name.full}
-                            </div>
-                            <div className={styles.character_role}>
-                              {character.role}
+              {data.characterPreview.edges.length > 0 && (
+                <div>
+                  <div
+                    style={{
+                      fontSize: '1.2rem',
+                      fontWeight: 'semibold',
+                    }}
+                  >
+                    Characters:
+                  </div>
+                  <Draggable className={styles.characters}>
+                    <>
+                      {data.characterPreview.edges.map((character, index) => {
+                        return (
+                          <div key={index} className={styles.character}>
+                            <img
+                              loading="lazy"
+                              className={styles.character_image}
+                              src={character.node.image.medium}
+                              alt={character.node.name.full}
+                            />
+                            <div className={styles.character_data}>
+                              <div className={styles.character_name}>
+                                {character.node.name.full}
+                              </div>
+                              <div className={styles.character_role}>
+                                {character.role}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      );
-                    })}
-                  </>
-                </Draggable>
-              </div>
+                        );
+                      })}
+                    </>
+                  </Draggable>
+                </div>
+              )}
             </div>
           </div>
         ) : (

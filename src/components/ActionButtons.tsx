@@ -49,7 +49,7 @@ export const WATCHLIST_BUTTON = ({
       color="violet"
       rightIcon={<BsPlus />}
     >
-      <p>Watchlist</p>
+      <p>Add</p>
     </Button>
   );
 };

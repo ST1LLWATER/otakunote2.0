@@ -21,7 +21,7 @@ const useStyles = createStyles((theme) => ({
     width: '100%',
     flex: 1,
     // margin: '0 auto 35px auto',
-    margin: '50px',
+    margin: '50px 0',
     padding: '0 100px',
 
     [theme.fn.smallerThan('lg')]: {
@@ -29,7 +29,7 @@ const useStyles = createStyles((theme) => ({
     },
 
     [theme.fn.smallerThan('sm')]: {
-      padding: '0',
+      padding: '10px',
     },
   },
 }));
